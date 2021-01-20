@@ -28,6 +28,14 @@
 
             <div class="form-row">
                 <div class="col-md-6 mb-6">
+                    <form:label path="employeeId">Employee Id</form:label>
+                    <form:input path="employeeId" class="form-control"/>
+                    <form:errors path="employeeId"/>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-md-6 mb-6">
                     <form:label path="firstName">First Name</form:label>
                     <form:input path="firstName" class="form-control"/>
                     <form:errors path="firstName"/>
@@ -38,13 +46,67 @@
                     <form:input path="lastName" class="form-control"/>
                     <form:errors path="lastName"/>
                 </div>
+            </div>
 
+            <div class="form-row">
+                <div class="col-md-6 mb-6">
+                    <form:label path="designation">Designation</form:label>
+                    <form:input path="designation" class="form-control"/>
+                    <form:errors path="designation"/>
+                </div>
+                <div class="col-md-6 mb-6">
+                    <form:label path="department">Department</form:label>
+                    <form:input path="department" class="form-control"/>
+                    <form:errors path="department"/>
+                </div>
             </div>
             <div class="form-row">
-                <div class="col-md-6 mb-3">
+                <div class="col-md-6 mb-6">
+                    <form:label path="workLocation">Work Location</form:label>
+                    <form:input path="workLocation" class="form-control"/>
+                    <form:errors path="workLocation"/>
+                </div>
+
+                <div class="col-md-6 mb-6">
                     <form:label path="company">Company</form:label>
                     <form:input path="company" class="form-control"/>
                     <form:errors path="company"/>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-md-6 mb-6">
+                    <form:label path="email">Email</form:label>
+                    <form:input path="email" class="form-control"/>
+                    <form:errors path="email"/>
+                </div>
+                <div class="col-md-6 mb-6">
+                    <form:label path="mobile">Mobile</form:label>
+                    <form:input path="mobile" class="form-control"/>
+                    <form:errors path="mobile"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6 mb-3">
+                    <form:label path="joiningDate">Joining Date</form:label>
+                    <form:input type="date" path="joiningDate" class="form-control"/>
+                    <form:errors path="joiningDate"/>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <form:label path="role">Role</form:label>
+                    <form:select path="role" class="form-control" >
+                        <form:option value="ADMIN"/>
+                        <form:option value="HR"/>
+                        <form:option value="EXECUTIVE"/>
+                    </form:select>
+                    <form:errors path="role"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6 mb-3">
+                    <form:label path="status">Status</form:label>
+                    <form:input path="status" class="form-control"/>
+                    <form:errors path="status"/>
                 </div>
             </div>
 

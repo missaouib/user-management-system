@@ -40,6 +40,7 @@ public class EmployeeController {
             return "add-employee-form";
         }
 
+        employeeRepository.save(employee);
         model.addAttribute("listOfEmployees", employeeRepository.findAll());
         return "employee-view";
     }
