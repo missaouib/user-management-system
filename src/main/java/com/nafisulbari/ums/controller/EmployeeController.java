@@ -5,7 +5,6 @@ import com.nafisulbari.ums.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -38,7 +37,6 @@ public class EmployeeController {
         employee.setStatus("s");
         employee.setWorkLocation("ss");
 
-
         employeeRepository.save(employee);
 
         model.addAttribute("employee", employee);
@@ -59,15 +57,9 @@ public class EmployeeController {
         System.out.println(employee.toString());
         System.out.println(result.hasErrors());
 
-
         if (result.hasErrors()) {
-            System.out.println("err");
-            System.out.println("Error: " + result.toString());
-            //todo
-            // add a label for error in add-employee-form.jsp
             return "add-employee-form";
         }
-
 
         return "employee-view";
     }
