@@ -1,12 +1,13 @@
 <html>
 <head>
+    <title>Error Page</title>
 </head>
 
 <body>
-<h3>Please enter the correct details</h3>
+<h2>ERROR:</h2>
 <table>
     <tr>
-        <td><a href="add-employee-form">Retry</a></td>
+        <td>Something went wrong!</td>
     </tr>
 </table>
 </body>
