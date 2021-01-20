@@ -28,17 +28,27 @@
                     <th scope="col">Employee ID</th>
                     <th scope="col">Fitst Name</th>
                     <th scope="col">Last Name</th>
+                    <th scope="col">Designation</th>
                     <th scope="col">Department</th>
                     <th scope="col">Status</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Action</th>
+
                 </tr>
                 </thead>
                 <tbody>
 
                 <c:forEach items="${listOfEmployees}" var="employee">
                     <tr>
+                        <td>${employee.employeeId}</td>
                         <td>${employee.firstName}</td>
                         <td>${employee.lastName}</td>
-                        <td>${employee.company}</td>
+                        <td>${employee.designation}</td>
+                        <td>${employee.department}</td>
+                        <td>${employee.status}</td>
+                        <td>${employee.role}</td>
+                        <td><a href="edit-employee/${employee.id}"></a>Edit</td>
+<%--todo implement edit and delete employee action --%>
                     </tr>
                 </c:forEach>
 
