@@ -1,0 +1,139 @@
+.navigation {
+	padding: 15px 0;
+	background: white;
+	z-index: 997;
+	width: $navigation-width;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+
+	&.sticky {
+		height: 100vh;
+	}
+
+	& .navigation-menu-body {
+		display: flex;
+		flex-direction: column;
+		padding: 0;
+		flex: 1;
+
+		& > ul {
+			li {
+
+				&.navigation-divider {
+					padding: 10px 30px;
+					text-transform: uppercase;
+					font-size: 11px;
+					color: rgba(black, .5);
+					letter-spacing: .5px;
+					margin-top: 10px;
+
+					&:first-child {
+						margin-top: 0;
+						padding-top: 0;
+					}
+				}
+
+				a {
+					display: flex;
+					align-items: center;
+					padding: 10px 30px;
+					color: black + 80;
+					transition: background .3s;
+
+					.nav-link-icon {
+						margin-right: .8rem;
+						stroke: rgba(black, .3);
+						transition: stroke .3s;
+						width: 18px;
+						height: 18px;
+					}
+
+					&:hover {
+						color: $color-primary;
+
+						.nav-link-icon {
+							stroke: $color-primary;
+						}
+					}
+
+					&.active {
+						position: relative;
+						background-color: white - 20;
+						color: $color-primary;
+						font-weight: 500;
+					}
+
+					.sub-menu-arrow {
+						margin-left: auto;
+						font-size: .550rem;
+						transition: transform .5s;
+
+						&.rotate-in {
+							transform: rotate(540deg);
+						}
+					}
+
+					.badge {
+						margin-left: auto;
+						text-indent: -9999px;
+						width: 6px;
+						height: 6px;
+						border-radius: 50%;
+						padding: 0;
+					}
+
+					& + ul {
+						display: none;
+
+						li {
+							margin: 0;
+
+							a {
+								padding-left: 62px;
+							}
+						}
+
+						ul {
+							border-left: none;
+
+							li {
+								a {
+									padding-left: 80px;
+								}
+							}
+						}
+					}
+				}
+
+				&.open {
+					& > a {
+						background-color: white - 20;
+
+						.nav-link-icon {
+							stroke: $color-primary;
+						}
+					}
+
+					& > ul {
+						display: block;
+
+						a.active {
+							background-color: inherit;
+
+							&:before {
+								content: '';
+								display: inline-block;
+								width: 5px;
+								height: 5px;
+								background-color: $color-primary;
+								border-radius: 50%;
+								margin-right: .5rem;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
