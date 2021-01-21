@@ -21,6 +21,10 @@
 
     <!-- begin::main-content -->
     <div class="main-content">
+        <div class="row mb-3">
+            <div class="col-md-8"><h3 class="h3">List of employees</h3></div>
+            <div class="col-md-4"><a class="btn btn-primary float-right" href="add-employee-form">Add Employee</a></div>
+        </div>
         <div class="table-responsive">
             <table class="table">
                 <thead>
@@ -47,7 +51,7 @@
                         <td>${employee.department}</td>
                         <td>${employee.status}</td>
                         <td>${employee.role}</td>
-                        <td><a href="edit-employee/${employee.id}"></a>Edit</td>
+                        <td>    <a href="/edit-employee-form/${employee.id}" class="btn btn-secondary btn-sm">Edit</a></td>
 <%--todo implement edit and delete employee action --%>
                     </tr>
                 </c:forEach>

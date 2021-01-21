@@ -23,9 +23,9 @@
     <div class="main-content">
 
 
-            <form:form method="POST" action="/add-employee" modelAttribute="employee">
+        <form:form method="POST" action="/update-employee/${ employee.get().id }" modelAttribute="employee">
 
-        <div class="form-row">
+            <div class="form-row">
                 <div class="col-md-6 mb-6">
                     <form:label path="employeeId">Employee Id</form:label>
                     <form:input type="number" path="employeeId" class="form-control"/>
@@ -109,7 +109,7 @@
                 </div>
             </div>
 
-            <button class="btn btn-primary" type="submit">Submit form</button>
+            <button class="btn btn-primary" type="submit">UPDATE</button>
         </form:form>
 
         <jsp:include page="fragments/footer.jsp"/>
