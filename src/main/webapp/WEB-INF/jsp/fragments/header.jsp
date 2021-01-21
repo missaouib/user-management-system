@@ -21,9 +21,9 @@
     <!-- begin::header-logo -->
     <div id="header-logo">
         <a href="index.html">
-            <img class="logo" src="assets/media/image/logo.png" alt="logo">
-            <img class="logo-sm" src="assets/media/image/logo-sm.png" alt="small logo">
-            <img class="logo-light" src="assets/media/image/logo-light.png" alt="light logo">
+            <img class="logo" src="/assets/media/image/logo.png" alt="logo">
+            <img class="logo-sm" src="/assets/media/image/logo-sm.png" alt="small logo">
+            <img class="logo-light" src="/assets/media/image/logo-light.png" alt="light logo">
         </a>
     </div>
     <!-- end::header-logo -->
