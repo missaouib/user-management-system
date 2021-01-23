@@ -42,15 +42,14 @@ public class EmployeeController {
 
 
     @RequestMapping(value = "add-employee", method = RequestMethod.POST)
-    public String submitAddEmployeeForm(@Valid @ModelAttribute("employee") Employee employee,
-                                        BindingResult result, Model model) {
+    public ModelAndView submitAddEmployeeForm(@Valid @ModelAttribute("employee") Employee employee,
+                                              BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "add-employee-form";
+            new ModelAndView("add-employee-form");
         }
 
         employeeRepository.save(employee);
-        model.addAttribute("listOfEmployees", employeeRepository.findAll());
-        return "employee-list";
+        return new ModelAndView("redirect:/employee-list");
     }
 
 
@@ -75,11 +74,9 @@ public class EmployeeController {
         if (result.hasErrors() || !tempEmployee.isPresent()) {
             return new ModelAndView("edit-employee-form");
         }
-
         employeeRepository.saveAndFlush(employee);
 
-        model.addAttribute("listOfEmployees", employeeRepository.findAll());
-        return new ModelAndView("employee-list");
+        return new ModelAndView("redirect:/employee-list");
     }
 
 
