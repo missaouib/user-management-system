@@ -80,4 +80,14 @@ public class EmployeeController {
     }
 
 
+    @RequestMapping(value = "delete-employee/{id}", method = RequestMethod.POST)
+    public ModelAndView deleteEmployee(@PathVariable("id") int id,
+                                       Model model) {
+
+        employeeRepository.deleteById(id);
+
+        return new ModelAndView("redirect:/employee-list");
+    }
+
+
 }
