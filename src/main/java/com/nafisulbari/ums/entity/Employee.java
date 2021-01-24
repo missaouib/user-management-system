@@ -5,17 +5,13 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-@ToString
 public class Employee {
 
     @Id
@@ -29,6 +25,9 @@ public class Employee {
     @NotNull
     @Pattern(regexp = "^[ A-Za-z]+$", message = "Only letters and spaces are allowed")
     private String firstName;
+
+    @NotNull
+    private String password;
 
     @NotNull
     @Pattern(regexp = "^[ A-Za-z]+$", message = "Only letters and spaces are allowed")
@@ -60,8 +59,8 @@ public class Employee {
     @DateTimeFormat
     private String joiningDate;
 
-    @NotNull
-    private String role;
+    @ManyToMany
+    private Set<Role> roles;
 
     @NotNull
     private String status;

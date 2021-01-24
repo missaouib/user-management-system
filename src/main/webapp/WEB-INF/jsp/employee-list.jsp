@@ -50,7 +50,7 @@
                         <td>${employee.designation}</td>
                         <td>${employee.department}</td>
                         <td>${employee.status}</td>
-                        <td>${employee.role}</td>
+                        <td>${employee.roles}</td>
                         <td>    <a href="/edit-employee-form/${employee.id}" class="btn btn-secondary btn-sm">Edit</a></td>
 <%--todo implement edit and delete employee action --%>
                     </tr>

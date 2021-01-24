@@ -1,3 +1,7 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <html>
 <head>
     <title>Login</title>
@@ -28,20 +32,24 @@
 
     <!-- logo -->
     <div id="logo">
-        <img class="logo" src="assets/media/image/logo.png" alt="image">
-        <img class="logo-dark" src="assets/media/image/logo-dark.png" alt="image">
+        <img class="logo" src="/assets/media/image/logo.png" alt="image">
+        <img class="logo-dark" src="/assets/media/image/logo-dark.png" alt="image">
     </div>
     <!-- ./ logo -->
 
     <h5>Sign in</h5>
 
     <!-- form -->
-    <form>
+    <form method="post" action="/login">
+
         <div class="form-group">
-            <input type="text" class="form-control" placeholder="Id" required autofocus>
+            <span>${message}</span>
+            <input name="username" type="text" class="form-control" placeholder="Id" required autofocus>
         </div>
         <div class="form-group">
-            <input type="password" class="form-control" placeholder="Password" required>
+            <input name="password" type="password" class="form-control" placeholder="Password" required>
+            <span>${error}</span>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </div>
         <div class="form-group d-flex justify-content-between">
             <div class="custom-control custom-checkbox">
@@ -50,7 +58,7 @@
             </div>
             <a href="recover-password.html">Reset password</a>
         </div>
-        <button class="btn btn-primary btn-block">Sign in</button>
+        <button type="submit" class="btn btn-primary btn-block">Sign in</button>
         <hr>
 
         <a href="./register.html" class="btn btn-outline-light btn-sm">Register now!</a>
@@ -62,10 +70,10 @@
 
 <jsp:include page="fragments/footer.jsp"/>
 <!-- Plugin scripts -->
-<script src="vendors/bundle.js"></script>
+<script src="/vendors/bundle.js"></script>
 
 <!-- App scripts -->
-<script src="assets/js/app.min.js"></script>
+<script src="/assets/js/app.min.js"></script>
 </body>
 
 
