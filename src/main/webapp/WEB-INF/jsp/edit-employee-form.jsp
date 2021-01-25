@@ -92,22 +92,13 @@
                 <form:errors path="joiningDate"/>
             </div>
             <div class="col-md-6 mb-3">
-                <form:label path="role">Role</form:label>
-                <form:select path="role" class="form-control">
-                    <form:option value="ADMIN"/>
-                    <form:option value="HR"/>
-                    <form:option value="EXECUTIVE"/>
-                </form:select>
-                <form:errors path="role"/>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="col-md-6 mb-3">
                 <form:label path="status">Status</form:label>
                 <form:input path="status" class="form-control"/>
                 <form:errors path="status"/>
             </div>
+
         </div>
+
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-3">

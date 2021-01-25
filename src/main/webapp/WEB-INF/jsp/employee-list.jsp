@@ -35,14 +35,14 @@
                     <th scope="col">Designation</th>
                     <th scope="col">Department</th>
                     <th scope="col">Status</th>
-                    <th scope="col">Role</th>
+                    <th scope="col">Roles</th>
                     <th scope="col">Action</th>
 
                 </tr>
                 </thead>
                 <tbody>
 
-                <c:forEach items="${listOfEmployees}" var="employee">
+                <c:forEach items = "${listOfEmployees}" var = "employee">
                     <tr>
                         <td>${employee.employeeId}</td>
                         <td>${employee.firstName}</td>
@@ -50,9 +50,13 @@
                         <td>${employee.designation}</td>
                         <td>${employee.department}</td>
                         <td>${employee.status}</td>
-                        <td>${employee.roles}</td>
-                        <td>    <a href="/edit-employee-form/${employee.id}" class="btn btn-secondary btn-sm">Edit</a></td>
-<%--todo implement edit and delete employee action --%>
+                        <td>
+                            <c:forEach items = "${employee.roles}" var = "role">
+                                ${role.name}
+                            </c:forEach>
+                        </td>
+                        <td><a href="/edit-employee-form/${employee.id}" class="btn btn-secondary btn-sm">Edit</a></td>
+                            <%--todo implement edit and delete employee action --%>
                     </tr>
                 </c:forEach>
 

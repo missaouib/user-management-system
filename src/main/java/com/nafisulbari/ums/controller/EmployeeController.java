@@ -1,7 +1,9 @@
 package com.nafisulbari.ums.controller;
 
 import com.nafisulbari.ums.entity.Employee;
+import com.nafisulbari.ums.entity.Role;
 import com.nafisulbari.ums.repository.EmployeeRepository;
+import com.nafisulbari.ums.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,8 +11,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.Optional;
+import java.util.*;
 
 
 @Controller
@@ -19,6 +22,10 @@ public class EmployeeController {
 
     @Autowired
     EmployeeRepository employeeRepository;
+
+    @Autowired
+    RoleRepository roleRepository;
+
 
     @GetMapping("/")
     public String getHomePage(Model model) {
@@ -30,6 +37,7 @@ public class EmployeeController {
     @RequestMapping(value = "employee-list")
     public String showEmployeeList(Model model) {
         model.addAttribute("listOfEmployees", employeeRepository.findAll());
+
         return "employee-list";
     }
 
@@ -37,18 +45,32 @@ public class EmployeeController {
     @RequestMapping(value = "add-employee-form", method = RequestMethod.GET)
     public String showAddEmployeeForm(Model model) {
         model.addAttribute("employee", new Employee());
+        model.addAttribute("roles", roleRepository.findAll());
+
         return "add-employee-form";
     }
 
 
     @RequestMapping(value = "add-employee", method = RequestMethod.POST)
     public ModelAndView submitAddEmployeeForm(@Valid @ModelAttribute("employee") Employee employee,
+                                               @RequestParam(name = "selectedRoles", required = false, defaultValue = "NOROLE") String selectedRoles,
                                               BindingResult result, Model model) {
         if (result.hasErrors()) {
             new ModelAndView("add-employee-form");
         }
 
+        List<Role> listOfAvailableRoles = roleRepository.findAll();
+        Set<Role> setOfRolesToAdd= new LinkedHashSet<>();
+
+        for (Role role : listOfAvailableRoles){
+            if (selectedRoles.contains(role.getName())){
+                setOfRolesToAdd.add(role);
+            }
+        }
+
+        employee.setRoles(setOfRolesToAdd);
         employeeRepository.save(employee);
+
         return new ModelAndView("redirect:/employee-list");
     }
 
@@ -65,8 +87,7 @@ public class EmployeeController {
     @RequestMapping(value = "update-employee/{id}", method = RequestMethod.POST)
     public ModelAndView submitEditEmployeeForm(@Valid @ModelAttribute("employee") Employee employee,
                                                @PathVariable("id") int id,
-                                               BindingResult result,
-                                               Model model) {
+                                               BindingResult result) {
 
         // somehow if we are not calling the tempEmployee for nothing, employee is not consisting any id.
         // also it wont work without the @PathVariable for unknown reason.

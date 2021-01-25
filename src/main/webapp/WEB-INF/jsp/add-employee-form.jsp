@@ -1,4 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 
 <!doctype html>
 <html lang="en">
@@ -23,13 +25,18 @@
     <div class="main-content">
 
 
-            <form:form method="POST" action="/add-employee" modelAttribute="employee">
+        <form:form method="POST" action="/add-employee" modelAttribute="employee">
 
-        <div class="form-row">
+            <div class="form-row">
                 <div class="col-md-6 mb-6">
                     <form:label path="employeeId">Employee Id</form:label>
                     <form:input type="number" path="employeeId" class="form-control"/>
                     <form:errors path="employeeId"/>
+                </div>
+                <div class="col-md-6 mb-6">
+                    <form:label path="password">Password</form:label>
+                    <form:input path="password" class="form-control"/>
+                    <form:errors path="password"/>
                 </div>
             </div>
 
@@ -92,21 +99,24 @@
                     <form:errors path="joiningDate"/>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <form:label path="role">Role</form:label>
-                    <form:select path="role" class="form-control" >
-                        <form:option value="ADMIN"/>
-                        <form:option value="HR"/>
-                        <form:option value="EXECUTIVE"/>
-                    </form:select>
-                    <form:errors path="role"/>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="col-md-6 mb-3">
                     <form:label path="status">Status</form:label>
                     <form:input path="status" class="form-control"/>
                     <form:errors path="status"/>
                 </div>
+            </div>
+            <div class="form-row">
+                <h5>Roles: </h5>
+                <c:forEach items="${roles}" var="role">
+                    <div class="col">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="selectedRoles"
+                                   value="${role.name}">
+                            <label class="form-check-label" for="${role.name}">
+                                    ${role.name}
+                            </label>
+                        </div>
+                    </div>
+                </c:forEach>
             </div>
 
             <button class="btn btn-primary" type="submit">Submit form</button>
