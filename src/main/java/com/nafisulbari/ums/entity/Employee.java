@@ -2,11 +2,11 @@ package com.nafisulbari.ums.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.Optional;
 import java.util.Set;
 
 @Entity
@@ -23,30 +23,38 @@ public class Employee {
     private int employeeId;
 
     @NotNull
+    @NotEmpty
     @Pattern(regexp = "^[ A-Za-z]+$", message = "Only letters and spaces are allowed")
     private String firstName;
 
     @NotNull
+    @NotEmpty
     private String password;
 
     @NotNull
+    @NotEmpty
     @Pattern(regexp = "^[ A-Za-z]+$", message = "Only letters and spaces are allowed")
     private String lastName;
 
     @NotNull
+    @NotEmpty
     private String company;
 
     @NotNull
+    @NotEmpty
     private String department;
 
     @NotNull
+    @NotEmpty
     private String designation;
 
     @NotNull
+    @NotEmpty
     private String workLocation;
 
     @NotNull
     @Email
+    @NotEmpty
     private String email;
 
     @NotNull
@@ -56,6 +64,7 @@ public class Employee {
     private String extension;
 
     @NotNull
+    @NotEmpty
     @DateTimeFormat
     private String joiningDate;
 
@@ -63,10 +72,31 @@ public class Employee {
     private Set<Role> roles;
 
     @NotNull
+    @NotEmpty
     private String status;
 
 
-
     public Employee() {
+    }
+
+    public Employee(Optional<Employee> employee) {
+        employee.ifPresent(e -> {
+            this.id = e.getId();
+            this.employeeId = e.getEmployeeId();
+            this.firstName = e.getFirstName();
+            this.lastName = e.getLastName();
+            this.password = e.getPassword();
+            this.company = e.getCompany();
+            this.department = e.getDepartment();
+            this.designation = e.getDesignation();
+            this.email = e.getEmail();
+            this.workLocation = e.getWorkLocation();
+            this.extension = e.getExtension();
+            this.joiningDate = e.getJoiningDate();
+            this.mobile = e.getMobile();
+            this.status = e.getStatus();
+            this.roles = e.getRoles();
+
+        });
     }
 }
