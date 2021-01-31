@@ -23,16 +23,18 @@ public class CustomErrorController implements ErrorController {
     @RequestMapping("/error")
     public String handleError(HttpServletRequest request, Model model) {
         Object errorCodeObject = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-        int errorCode = Integer.parseInt(errorCodeObject.toString());
-        String errorMessage = (String) request.getAttribute(RequestDispatcher.ERROR_MESSAGE);
+        Object errorMessage = request.getAttribute(RequestDispatcher.ERROR_MESSAGE);
 
-        if (errorMessage.isEmpty()) {
+        if (errorCodeObject == null) {
+            model.addAttribute("errorCode", 500);
+            model.addAttribute("errorMessage", "Something Went Wrong");
+        } else if (errorMessage == null || errorMessage.toString().isEmpty()) {
+            model.addAttribute("errorCode", errorCodeObject);
             model.addAttribute("errorMessage", "Something Went Wrong");
         } else {
+            model.addAttribute("errorCode", errorCodeObject);
             model.addAttribute("errorMessage", errorMessage);
         }
-
-        model.addAttribute("errorCode", errorCode);
 
         return "error";
     }
