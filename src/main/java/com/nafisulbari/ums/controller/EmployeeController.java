@@ -53,17 +53,20 @@ public class EmployeeController {
 
     @RequestMapping(value = "add-employee", method = RequestMethod.POST)
     public ModelAndView submitAddEmployeeForm(@Valid @ModelAttribute("employee") Employee employee,
-                                               @RequestParam(name = "selectedRoles", required = false, defaultValue = "NOROLE") String selectedRoles,
-                                              BindingResult result, Model model) {
+                                              BindingResult result,
+                                              @RequestParam(name = "selectedRoles", required = false, defaultValue = "NOROLE") String selectedRoles,
+                                              Model model) {
+
         if (result.hasErrors()) {
-            new ModelAndView("add-employee-form");
+            model.addAttribute("roles", roleRepository.findAll());
+            return new ModelAndView("add-employee-form");
         }
 
         List<Role> listOfAvailableRoles = roleRepository.findAll();
-        Set<Role> setOfRolesToAdd= new LinkedHashSet<>();
+        Set<Role> setOfRolesToAdd = new LinkedHashSet<>();
 
-        for (Role role : listOfAvailableRoles){
-            if (selectedRoles.contains(role.getName())){
+        for (Role role : listOfAvailableRoles) {
+            if (selectedRoles.contains(role.getName())) {
                 setOfRolesToAdd.add(role);
             }
         }
@@ -77,8 +80,13 @@ public class EmployeeController {
 
     @RequestMapping(value = "edit-employee-form/{id}", method = RequestMethod.GET)
     public ModelAndView showEditEmployeeForm(@PathVariable("id") int id, Model model) {
-        Optional<Employee> employee = employeeRepository.findById(id);
+        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
+        if (!optionalEmployee.isPresent()) {
+            return new ModelAndView("redirect:/error");
+        }
+        Employee employee = new Employee(optionalEmployee);
         model.addAttribute("employee", employee);
+        model.addAttribute("roles", roleRepository.findAll());
 
         return new ModelAndView("edit-employee-form");
     }
@@ -86,8 +94,10 @@ public class EmployeeController {
 
     @RequestMapping(value = "update-employee/{id}", method = RequestMethod.POST)
     public ModelAndView submitEditEmployeeForm(@Valid @ModelAttribute("employee") Employee employee,
+                                               BindingResult result,
                                                @PathVariable("id") int id,
-                                               BindingResult result) {
+                                               @RequestParam(name = "selectedRoles", required = false, defaultValue = "NOROLE") String selectedRoles,
+                                               Model model) {
 
         // somehow if we are not calling the tempEmployee for nothing, employee is not consisting any id.
         // also it wont work without the @PathVariable for unknown reason.
@@ -95,6 +105,17 @@ public class EmployeeController {
         if (result.hasErrors() || !tempEmployee.isPresent()) {
             return new ModelAndView("edit-employee-form");
         }
+
+        List<Role> listOfAvailableRoles = roleRepository.findAll();
+        Set<Role> setOfRolesToAdd = new LinkedHashSet<>();
+
+        for (Role role : listOfAvailableRoles) {
+            if (selectedRoles.contains(role.getName())) {
+                setOfRolesToAdd.add(role);
+            }
+        }
+
+        employee.setRoles(setOfRolesToAdd);
         employeeRepository.saveAndFlush(employee);
 
         return new ModelAndView("redirect:/employee-list");
@@ -102,9 +123,9 @@ public class EmployeeController {
 
 
     @RequestMapping(value = "delete-employee/{id}", method = RequestMethod.POST)
-    public ModelAndView deleteEmployee(@PathVariable("id") int id,
-                                       Model model) {
+    public ModelAndView deleteEmployee(@PathVariable("id") int id) {
 
+        System.err.println(id);
         employeeRepository.deleteById(id);
 
         return new ModelAndView("redirect:/employee-list");
