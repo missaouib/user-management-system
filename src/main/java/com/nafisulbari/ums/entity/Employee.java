@@ -79,8 +79,8 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(Optional<Employee> employee) {
-        employee.ifPresent(e -> {
+    public Employee(Optional<Employee> optionalEmployee) {
+        optionalEmployee.ifPresent(e -> {
             this.id = e.getId();
             this.employeeId = e.getEmployeeId();
             this.firstName = e.getFirstName();
