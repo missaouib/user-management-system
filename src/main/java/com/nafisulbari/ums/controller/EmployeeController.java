@@ -132,4 +132,81 @@ public class EmployeeController {
     }
 
 
+    //-------------------------------------------------------------------------
+
+    @RequestMapping(value = "role-list")
+    public String showRoleList(Model model) {
+        model.addAttribute("listOfRoles", roleRepository.findAll());
+
+        return "role-list";
+    }
+
+
+    @RequestMapping(value = "add-role-form", method = RequestMethod.GET)
+    public String showAddRoleForm(Model model) {
+        model.addAttribute("role", new Role());
+
+        return "add-role-form";
+    }
+
+
+    @RequestMapping(value = "add-role", method = RequestMethod.POST)
+    public ModelAndView submitAddRoleForm(@Valid @ModelAttribute("role") Role role,
+                                          BindingResult result,
+                                          Model model) {
+        if (result.hasErrors()) {
+            return new ModelAndView("add-role-form");
+        }
+
+        roleRepository.save(role);
+
+        return new ModelAndView("redirect:/role-list");
+    }
+
+
+    @RequestMapping(value = "edit-role-form/{id}", method = RequestMethod.GET)
+    public ModelAndView showEditRoleForm(@PathVariable("id") int id, Model model) {
+        Optional<Role> optionalRole = roleRepository.findById(id);
+
+        if (!optionalRole.isPresent()) {
+            return new ModelAndView("redirect:/error");
+        }
+        Role role = new Role(optionalRole);
+        model.addAttribute("role", role);
+
+        return new ModelAndView("edit-role-form");
+    }
+
+
+    @RequestMapping(value = "update-role/{id}", method = RequestMethod.POST)
+    public ModelAndView submitEditRoleForm(@Valid @ModelAttribute("role") Role role,
+                                           BindingResult result,
+                                           @PathVariable("id") int id,
+                                           Model model) {
+
+        // somehow if we are not calling the tempEmployee for nothing, employee is not consisting any id.
+        // also it wont work without the @PathVariable for unknown reason.
+        Optional<Role> tempRole = roleRepository.findById(id);
+        if (result.hasErrors() || !tempRole.isPresent()) {
+            return new ModelAndView("edit-role-form");
+        }
+
+        role.setId(tempRole.get().getId());
+        roleRepository.saveAndFlush(role);
+
+        return new ModelAndView("redirect:/role-list");
+    }
+
+
+    @RequestMapping(value = "delete-role/{id}", method = RequestMethod.POST)
+    public ModelAndView deleteRole(@PathVariable("id") int id) {
+
+
+        //todo if exception found(roles been assigned) therefore don't allow delete
+        roleRepository.deleteById(id);
+
+        return new ModelAndView("redirect:/role-list");
+    }
+
+
 }
