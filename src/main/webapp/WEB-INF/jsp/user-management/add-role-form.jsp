@@ -8,22 +8,25 @@
 
     <title>Add Role</title>
 
-    <jsp:include page="fragments/head-meta-links.jsp"/>
+    <jsp:include page="../fragments/head-meta-links.jsp"/>
 
 </head>
 <body>
 
-<jsp:include page="fragments/header.jsp"/>
+<jsp:include page="../fragments/header.jsp"/>
 
 
 <!-- begin::main -->
 <div id="main">
 
-    <jsp:include page="fragments/navigation.jsp"/>
+    <jsp:include page="../fragments/navigation.jsp"/>
 
     <!-- begin::main-content -->
     <div class="main-content">
-
+        <div class="row mb-3">
+            <div class="col-md-8"><h3 class="h3">Add Role Name</h3></div>
+            <div class="col-md-4"></div>
+        </div>
 
         <form:form method="POST" action="/add-role" modelAttribute="role">
 
@@ -43,7 +46,7 @@
 
         </form:form>
 
-        <jsp:include page="fragments/footer.jsp"/>
+        <jsp:include page="../fragments/footer.jsp"/>
 
     </div>
     <!-- end::main-content -->
@@ -51,6 +54,6 @@
 </div>
 <!-- end::main -->
 
-<jsp:include page="fragments/plugin-scripts.jsp"/>
+<jsp:include page="../fragments/plugin-scripts.jsp"/>
 </body>
 </html>

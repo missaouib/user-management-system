@@ -6,18 +6,18 @@
 
     <title>List Of Roles</title>
 
-    <jsp:include page="fragments/head-meta-links.jsp"/>
+    <jsp:include page="../fragments/head-meta-links.jsp"/>
 
 </head>
 <body>
 
-<jsp:include page="fragments/header.jsp"/>
+<jsp:include page="../fragments/header.jsp"/>
 
 
 <!-- begin::main -->
 <div id="main">
 
-    <jsp:include page="fragments/navigation.jsp"/>
+    <jsp:include page="../fragments/navigation.jsp"/>
 
     <!-- begin::main-content -->
     <div class="main-content">
@@ -50,7 +50,7 @@
             </table>
         </div>
 
-        <jsp:include page="fragments/footer.jsp"/>
+        <jsp:include page="../fragments/footer.jsp"/>
 
     </div>
     <!-- end::main-content -->
@@ -58,6 +58,6 @@
 </div>
 <!-- end::main -->
 
-<jsp:include page="fragments/plugin-scripts.jsp"/>
+<jsp:include page="../fragments/plugin-scripts.jsp"/>
 </body>
 </html>

@@ -1,17 +1,19 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- begin::navigation -->
 <div class="navigation">
+<c:set var="URI" value="${pageContext.request.requestURI}"/>
 
     <!-- begin::navigation menu -->
     <div class="navigation-menu-body">
         <ul>
             <li class="navigation-divider">Navigation</li>
-            <li class="open">
+            <li>
                 <a href="index.html">
                     <i class="nav-link-icon" data-feather="bar-chart-2"></i>
                     <span>Dashboard</span>
                 </a>
                 <ul>
-                    <li><a class="active" href="index.html">CRM System</a></li>
+                    <li><a href="index.html">CRM System</a></li>
                     <li><a href="dashboard-two.html">Ecommerce</a></li>
                     <li><a href="dashboard-three.html">Analytics</a></li>
                     <li><a href="dashboard-four.html">Project Management</a></li>
@@ -160,17 +162,17 @@
                     <li><a href="vector-map.html">Vector</a></li>
                 </ul>
             </li>
-            <li class="navigation-divider">Extras</li>
-            <li>
+            <li class="navigation-divider">Management</li>
+            <li <c:if test="${URI.contains('user-management')}">class="open" </c:if>>
                 <a href="#">
                     <i class="nav-link-icon" data-feather="user"></i>
-                    <span>Authentication</span>
+                    <span>User Management</span>
                 </a>
                 <ul>
-                    <li><a href="login.html">Login</a></li>
-                    <li><a href="register.html">Register</a></li>
-                    <li><a href="recover-password.html">Recovery Password</a></li>
-                    <li><a href="lock-screen.html">Lock Screen</a></li>
+                    <li><a <c:if test="${URI.contains('add-employee-form')}">class="active"</c:if> href="/add-employee-form">Add Employee</a></li>
+                    <li><a <c:if test="${URI.contains('employee-list')}">class="active"</c:if> href="/employee-list">Employees</a></li>
+                    <li><a <c:if test="${URI.contains('add-role-form')}">class="active"</c:if> href="/add-role-form">Add Role</a></li>
+                    <li><a <c:if test="${URI.contains('role-list')}">class="active"</c:if> href="/role-list">Roles</a></li>
                 </ul>
             </li>
             <li>
