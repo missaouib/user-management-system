@@ -39,7 +39,7 @@
             </div>
             <div class="form-row mt-3">
                 <div class="col-md-6 mb-6">
-                    <button class="btn btn-primary" type="submit">Submit form</button>
+                    <button class="btn btn-primary" type="submit">Add Role</button>
                 </div>
             </div>
 

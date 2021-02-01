@@ -23,7 +23,7 @@
     <div class="main-content">
         <div class="row mb-3">
             <div class="col-md-8"><h3 class="h3">List of roles</h3></div>
-            <div class="col-md-4"><a class="btn btn-primary float-right" href="add-role-form">Add Role</a></div>
+            <div class="col-md-4"><a class="btn btn-primary float-right text-white" href="add-role-form">Add Role</a></div>
         </div>
         <div class="table-responsive">
             <table class="table">
@@ -41,7 +41,7 @@
                         <td>${role.id}</td>
                         <td>${role.name}</td>
 
-                        <td><a href="/edit-role-form/${role.id}" class="btn btn-secondary btn-sm">Edit</a></td>
+                        <td><a href="/edit-role-form/${role.id}" class="btn btn-secondary btn-sm text-white">Edit</a></td>
                             <%--todo implement edit and delete employee action --%>
                     </tr>
                 </c:forEach>

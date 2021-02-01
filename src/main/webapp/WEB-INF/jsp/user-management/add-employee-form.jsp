@@ -122,7 +122,7 @@
                 </c:forEach>
             </div>
 
-            <button class="btn btn-primary" type="submit">Submit form</button>
+            <button class="btn btn-primary" type="submit">Add Employee</button>
         </form:form>
 
         <jsp:include page="../fragments/footer.jsp"/>
