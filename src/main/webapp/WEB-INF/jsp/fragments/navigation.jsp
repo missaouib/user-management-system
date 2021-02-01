@@ -166,15 +166,24 @@
             <li <c:if test="${URI.contains('user-management')}">class="open" </c:if>>
                 <a href="#">
                     <i class="nav-link-icon" data-feather="user"></i>
-                    <span>User Management</span>
+                    <span>Employee</span>
                 </a>
                 <ul>
                     <li><a <c:if test="${URI.contains('add-employee-form')}">class="active"</c:if> href="/add-employee-form">Add Employee</a></li>
                     <li><a <c:if test="${URI.contains('employee-list')}">class="active"</c:if> href="/employee-list">Employees</a></li>
+                </ul>
+            </li>
+            <li <c:if test="${URI.contains('role-management')}">class="open" </c:if>>
+                <a href="#">
+                    <i class="nav-link-icon" data-feather="user"></i>
+                    <span>Role</span>
+                </a>
+                <ul>
                     <li><a <c:if test="${URI.contains('add-role-form')}">class="active"</c:if> href="/add-role-form">Add Role</a></li>
                     <li><a <c:if test="${URI.contains('role-list')}">class="active"</c:if> href="/role-list">Roles</a></li>
                 </ul>
             </li>
+            <li class="navigation-divider">Extras</li>
             <li>
                 <a href="#">
                     <i class="nav-link-icon" data-feather="copy"></i>

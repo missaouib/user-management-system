@@ -137,7 +137,7 @@ public class EmployeeController {
     public String showRoleList(Model model) {
         model.addAttribute("listOfRoles", roleRepository.findAll());
 
-        return "user-management/role-list";
+        return "role-management/role-list";
     }
 
 
@@ -145,7 +145,7 @@ public class EmployeeController {
     public String showAddRoleForm(Model model) {
         model.addAttribute("role", new Role());
 
-        return "user-management/add-role-form";
+        return "role-management/add-role-form";
     }
 
 
@@ -154,7 +154,7 @@ public class EmployeeController {
                                           BindingResult result,
                                           Model model) {
         if (result.hasErrors()) {
-            return new ModelAndView("user-management/add-role-form");
+            return new ModelAndView("role-management/add-role-form");
         }
 
         roleRepository.save(role);
@@ -173,7 +173,7 @@ public class EmployeeController {
         Role role = new Role(optionalRole);
         model.addAttribute("role", role);
 
-        return new ModelAndView("user-management/edit-role-form");
+        return new ModelAndView("role-management/edit-role-form");
     }
 
 
@@ -187,7 +187,7 @@ public class EmployeeController {
         // also it wont work without the @PathVariable for unknown reason.
         Optional<Role> tempRole = roleRepository.findById(id);
         if (result.hasErrors() || !tempRole.isPresent()) {
-            return new ModelAndView("user-management/edit-role-form");
+            return new ModelAndView("role-management/edit-role-form");
         }
 
         role.setId(tempRole.get().getId());
