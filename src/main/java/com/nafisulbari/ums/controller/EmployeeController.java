@@ -61,16 +61,7 @@ public class EmployeeController {
             return new ModelAndView("user-management/add-employee-form");
         }
 
-        List<Role> listOfAvailableRoles = roleRepository.findAll();
-        Set<Role> setOfRolesToAdd = new LinkedHashSet<>();
-
-        for (Role role : listOfAvailableRoles) {
-            if (selectedRoles.contains(role.getName())) {
-                setOfRolesToAdd.add(role);
-            }
-        }
-
-        employee.setRoles(setOfRolesToAdd);
+        setSelectedRolesToEmployee(employee, selectedRoles);
         employeeRepository.save(employee);
 
         return new ModelAndView("redirect:/employee-list");
@@ -105,16 +96,7 @@ public class EmployeeController {
             return new ModelAndView("user-management/edit-employee-form");
         }
 
-        List<Role> listOfAvailableRoles = roleRepository.findAll();
-        Set<Role> setOfRolesToAdd = new LinkedHashSet<>();
-
-        for (Role role : listOfAvailableRoles) {
-            if (selectedRoles.contains(role.getName())) {
-                setOfRolesToAdd.add(role);
-            }
-        }
-
-        employee.setRoles(setOfRolesToAdd);
+        setSelectedRolesToEmployee(employee, selectedRoles);
         employeeRepository.saveAndFlush(employee);
 
         return new ModelAndView("redirect:/employee-list");
@@ -124,7 +106,6 @@ public class EmployeeController {
     @RequestMapping(value = "delete-employee/{id}", method = RequestMethod.POST)
     public ModelAndView deleteEmployee(@PathVariable("id") int id) {
 
-        System.err.println(id);
         employeeRepository.deleteById(id);
 
         return new ModelAndView("redirect:/employee-list");
@@ -156,7 +137,6 @@ public class EmployeeController {
         if (result.hasErrors()) {
             return new ModelAndView("role-management/add-role-form");
         }
-
         roleRepository.save(role);
 
         return new ModelAndView("redirect:/role-list");
@@ -198,13 +178,36 @@ public class EmployeeController {
 
 
     @RequestMapping(value = "delete-role/{id}", method = RequestMethod.POST)
-    public ModelAndView deleteRole(@PathVariable("id") int id) {
+    public ModelAndView deleteRole(@PathVariable("id") int id, Model model) {
 
 
         //todo if exception found(roles been assigned) therefore don't allow delete
-        roleRepository.deleteById(id);
+        try {
+            roleRepository.deleteById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Role role = roleRepository.getOne(id);
+            model.addAttribute("role", role);
+            model.addAttribute("message", "Unable to delete role because its been assigned to employees");
+
+            return new ModelAndView("role-management/edit-role-form");
+        }
 
         return new ModelAndView("redirect:/role-list");
+    }
+
+
+    private void setSelectedRolesToEmployee(Employee employee, String selectedRoles) {
+        List<Role> listOfAvailableRoles = roleRepository.findAll();
+        Set<Role> setOfRolesToAdd = new LinkedHashSet<>();
+
+        for (Role role : listOfAvailableRoles) {
+            if (selectedRoles.contains(role.getName())) {
+                setOfRolesToAdd.add(role);
+            }
+        }
+
+        employee.setRoles(setOfRolesToAdd);
     }
 
 
