@@ -197,6 +197,15 @@ public class EmployeeController {
     }
 
 
+
+    /**
+     *  List of Roles are fetched from the repository and are checked with selectedRoles.
+     *  If they match a Set of roles is being created.
+     *  Then it is assigned to the employee entity.
+     *
+     *  Params: selectedRoles - Contains comma separated roles in String
+     *          employee - Contains an entity
+     * */
     private void setSelectedRolesToEmployee(Employee employee, String selectedRoles) {
         List<Role> listOfAvailableRoles = roleRepository.findAll();
         Set<Role> setOfRolesToAdd = new LinkedHashSet<>();
