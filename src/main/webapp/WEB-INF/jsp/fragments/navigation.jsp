@@ -175,7 +175,7 @@
             </li>
             <li <c:if test="${URI.contains('role-management')}">class="open" </c:if>>
                 <a href="#">
-                    <i class="nav-link-icon" data-feather="user"></i>
+                    <i class="nav-link-icon" data-feather="sliders"></i>
                     <span>Role</span>
                 </a>
                 <ul>

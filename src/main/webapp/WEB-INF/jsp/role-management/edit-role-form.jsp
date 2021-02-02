@@ -24,7 +24,7 @@
     <!-- begin::main-content -->
     <div class="main-content">
         <div class="row mb-3">
-            <div class="col-md-8"><h3 class="h3">Edit Role Name : ${role.name}</h3></div>
+            <div class="col-md-8"><h3 class="h3">Edit Role Name : ${role.name}</h3> <br><h4 class="text-danger">${message}</h4></div>
             <div class="col-md-4"></div>
         </div>
 
