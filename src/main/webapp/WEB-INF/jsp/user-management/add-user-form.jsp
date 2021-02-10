@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
 
-    <title>Add Employee</title>
+    <title>Add User</title>
 
     <jsp:include page="../fragments/head-meta-links.jsp"/>
 
@@ -24,17 +24,17 @@
     <!-- begin::main-content -->
     <div class="main-content">
         <div class="row mb-3">
-            <div class="col-md-8"><h3 class="h3">Add Employee</h3></div>
+            <div class="col-md-8"><h3 class="h3">Add User</h3></div>
             <div class="col-md-4"></div>
         </div>
 
-        <form:form method="POST" action="/add-employee" modelAttribute="employee">
+        <form:form method="POST" action="/add-user" modelAttribute="user">
 
             <div class="form-row">
                 <div class="col-md-6 mb-6">
-                    <form:label path="employeeId">Employee Id</form:label>
-                    <form:input type="number" path="employeeId" class="form-control"/>
-                    <form:errors cssClass="text-danger" path="employeeId"/>
+                    <form:label path="userId">User Id</form:label>
+                    <form:input type="number" path="userId" class="form-control"/>
+                    <form:errors cssClass="text-danger" path="userId"/>
                 </div>
                 <div class="col-md-6 mb-6">
                     <form:label path="password">Password</form:label>
@@ -122,7 +122,7 @@
                 </c:forEach>
             </div>
 
-            <button class="btn btn-primary" type="submit">Add Employee</button>
+            <button class="btn btn-primary" type="submit">Add User</button>
         </form:form>
 
         <jsp:include page="../fragments/footer.jsp"/>

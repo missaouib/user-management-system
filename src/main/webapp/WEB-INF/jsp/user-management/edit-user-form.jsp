@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
 
-    <title>Add Employee</title>
+    <title>Add User</title>
 
     <jsp:include page="../fragments/head-meta-links.jsp"/>
 
@@ -23,17 +23,17 @@
     <!-- begin::main-content -->
     <div class="main-content">
         <div class="row mb-3">
-            <div class="col-md-8"><h3 class="h3">Edit Employee</h3></div>
+            <div class="col-md-8"><h3 class="h3">Edit User</h3></div>
             <div class="col-md-4"></div>
         </div>
 
-        <form:form method="POST" action="/update-employee/${ employee.id }" modelAttribute="employee">
+        <form:form method="POST" action="/update-user/${ user.id }" modelAttribute="user">
 
             <div class="form-row">
                 <div class="col-md-6 mb-6">
-                    <form:label path="employeeId">Employee Id</form:label>
-                    <form:input type="number" path="employeeId" class="form-control"/>
-                    <form:errors cssClass="text-danger" path="employeeId"/>
+                    <form:label path="userId">User Id</form:label>
+                    <form:input type="number" path="userId" class="form-control"/>
+                    <form:errors cssClass="text-danger" path="userId"/>
                 </div>
                 <div class="col-md-6 mb-6">
                     <form:label path="password">Password</form:label>
@@ -113,7 +113,7 @@
                     <div class="col">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" name="selectedRoles"
-                                   value="${role.name}" <c:if test="${employee.roles.contains(role)}">checked</c:if>>
+                                   value="${role.name}" <c:if test="${user.roles.contains(role)}">checked</c:if>>
                             <label class="form-check-label" for="${role.name}">
                                     ${role.name}
                             </label>
@@ -133,7 +133,7 @@
                     DELETE
                 </button>
             </div>
-            <form:form action="/delete-employee/${ employee.id }" method="POST">
+            <form:form action="/delete-user/${ user.id }" method="POST">
                 <div class="col-md-3">
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                          aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -146,7 +146,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    Are you sure you want to delete this employee?
+                                    Are you sure you want to delete this user?
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-danger">Delete</button>

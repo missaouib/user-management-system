@@ -1,8 +1,7 @@
 package com.nafisulbari.ums.security;
 
-import com.nafisulbari.ums.entity.Employee;
-import com.nafisulbari.ums.entity.Role;
-import com.nafisulbari.ums.repository.EmployeeRepository;
+import com.nafisulbari.ums.entity.User;
+import com.nafisulbari.ums.repository.UserRepository;
 import com.nafisulbari.ums.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,7 +13,7 @@ import java.util.HashSet;
 public class UserServiceImpl implements UserService{
 
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -24,15 +23,15 @@ public class UserServiceImpl implements UserService{
 
 
     @Override
-    public void save(Employee employee) {
-        employee.setPassword(bCryptPasswordEncoder.encode(employee.getPassword()));
-        employee.setRoles(new HashSet<>(roleRepository.findAll()));
-        employeeRepository.save(employee);
-
+    public void save(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setRoles(new HashSet<>(roleRepository.findAll()));
+        userRepository.save(user);
     }
 
+
     @Override
-    public Employee findByEmployeeId(String employeeId) {
-        return employeeRepository.findByEmployeeId(Integer.parseInt(employeeId));
+    public User findByUserId(String userId) {
+        return userRepository.findByUserId(Integer.parseInt(userId));
     }
 }

@@ -1,8 +1,8 @@
 package com.nafisulbari.ums.controller;
 
-import com.nafisulbari.ums.entity.Employee;
+import com.nafisulbari.ums.entity.User;
 import com.nafisulbari.ums.entity.Role;
-import com.nafisulbari.ums.repository.EmployeeRepository;
+import com.nafisulbari.ums.repository.UserRepository;
 import com.nafisulbari.ums.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,11 +16,11 @@ import java.util.*;
 
 
 @Controller
-public class EmployeeController {
+public class UserController {
 
 
     @Autowired
-    EmployeeRepository employeeRepository;
+    UserRepository userRepository;
 
     @Autowired
     RoleRepository roleRepository;
@@ -33,82 +33,82 @@ public class EmployeeController {
     }
 
 
-    @RequestMapping(value = "employee-list")
-    public String showEmployeeList(Model model) {
-        model.addAttribute("listOfEmployees", employeeRepository.findAll());
+    @RequestMapping(value = "user-list")
+    public String showUserList(Model model) {
+        model.addAttribute("listOfUsers", userRepository.findAll());
 
-        return "user-management/employee-list";
+        return "user-management/user-list";
     }
 
 
-    @RequestMapping(value = "add-employee-form", method = RequestMethod.GET)
-    public String showAddEmployeeForm(Model model) {
-        model.addAttribute("employee", new Employee());
+    @RequestMapping(value = "add-user-form", method = RequestMethod.GET)
+    public String showAddUserForm(Model model) {
+        model.addAttribute("user", new User());
         model.addAttribute("roles", roleRepository.findAll());
 
-        return "user-management/add-employee-form";
+        return "user-management/add-user-form";
     }
 
 
-    @RequestMapping(value = "add-employee", method = RequestMethod.POST)
-    public ModelAndView submitAddEmployeeForm(@Valid @ModelAttribute("employee") Employee employee,
+    @RequestMapping(value = "add-user", method = RequestMethod.POST)
+    public ModelAndView submitAddUserForm(@Valid @ModelAttribute("user") User user,
                                               BindingResult result,
                                               @RequestParam(name = "selectedRoles", required = false, defaultValue = "NOROLE") String selectedRoles,
                                               Model model) {
 
         if (result.hasErrors()) {
             model.addAttribute("roles", roleRepository.findAll());
-            return new ModelAndView("user-management/add-employee-form");
+            return new ModelAndView("user-management/add-user-form");
         }
 
-        setSelectedRolesToEmployee(employee, selectedRoles);
-        employeeRepository.save(employee);
+        setSelectedRolesToUser(user, selectedRoles);
+        userRepository.save(user);
 
-        return new ModelAndView("redirect:/employee-list");
+        return new ModelAndView("redirect:/user-list");
     }
 
 
-    @RequestMapping(value = "edit-employee-form/{id}", method = RequestMethod.GET)
-    public ModelAndView showEditEmployeeForm(@PathVariable("id") int id, Model model) {
-        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
-        if (!optionalEmployee.isPresent()) {
+    @RequestMapping(value = "edit-user-form/{id}", method = RequestMethod.GET)
+    public ModelAndView showEditUserForm(@PathVariable("id") int id, Model model) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (!optionalUser.isPresent()) {
             return new ModelAndView("redirect:/error");
         }
-        Employee employee = new Employee(optionalEmployee);
-        model.addAttribute("employee", employee);
+        User user = new User(optionalUser);
+        model.addAttribute("user", user);
         model.addAttribute("roles", roleRepository.findAll());
 
-        return new ModelAndView("user-management/edit-employee-form");
+        return new ModelAndView("user-management/edit-user-form");
     }
 
 
-    @RequestMapping(value = "update-employee/{id}", method = RequestMethod.POST)
-    public ModelAndView submitEditEmployeeForm(@Valid @ModelAttribute("employee") Employee employee,
+    @RequestMapping(value = "update-user/{id}", method = RequestMethod.POST)
+    public ModelAndView submitEditUserForm(@Valid @ModelAttribute("user") User user,
                                                BindingResult result,
                                                @PathVariable("id") int id,
                                                @RequestParam(name = "selectedRoles", required = false, defaultValue = "NOROLE") String selectedRoles,
                                                Model model) {
 
-        // somehow if we are not calling the tempEmployee for nothing, employee is not consisting any id.
+        // somehow if we are not calling the tempUser for nothing, user is not consisting any id.
         // also it wont work without the @PathVariable for unknown reason.
-        Optional<Employee> tempEmployee = employeeRepository.findById(employee.getId());
-        if (result.hasErrors() || !tempEmployee.isPresent()) {
-            return new ModelAndView("user-management/edit-employee-form");
+        Optional<User> tempUser = userRepository.findById(user.getId());
+        if (result.hasErrors() || !tempUser.isPresent()) {
+            return new ModelAndView("user-management/edit-user-form");
         }
 
-        setSelectedRolesToEmployee(employee, selectedRoles);
-        employeeRepository.saveAndFlush(employee);
+        setSelectedRolesToUser(user, selectedRoles);
+        userRepository.saveAndFlush(user);
 
-        return new ModelAndView("redirect:/employee-list");
+        return new ModelAndView("redirect:/user-list");
     }
 
 
-    @RequestMapping(value = "delete-employee/{id}", method = RequestMethod.POST)
-    public ModelAndView deleteEmployee(@PathVariable("id") int id) {
+    @RequestMapping(value = "delete-user/{id}", method = RequestMethod.POST)
+    public ModelAndView deleteUser(@PathVariable("id") int id) {
 
-        employeeRepository.deleteById(id);
+        userRepository.deleteById(id);
 
-        return new ModelAndView("redirect:/employee-list");
+        return new ModelAndView("redirect:/user-list");
     }
 
 
@@ -163,7 +163,7 @@ public class EmployeeController {
                                            @PathVariable("id") int id,
                                            Model model) {
 
-        // somehow if we are not calling the tempEmployee for nothing, employee is not consisting any id.
+        // somehow if we are not calling the tempUser for nothing, user is not consisting any id.
         // also it wont work without the @PathVariable for unknown reason.
         Optional<Role> tempRole = roleRepository.findById(id);
         if (result.hasErrors() || !tempRole.isPresent()) {
@@ -188,7 +188,7 @@ public class EmployeeController {
             e.printStackTrace();
             Role role = roleRepository.getOne(id);
             model.addAttribute("role", role);
-            model.addAttribute("message", "Unable to delete role because its been assigned to employees");
+            model.addAttribute("message", "Unable to delete role because its been assigned to users");
 
             return new ModelAndView("role-management/edit-role-form");
         }
@@ -201,12 +201,12 @@ public class EmployeeController {
     /**
      *  List of Roles are fetched from the repository and are checked with selectedRoles.
      *  If they match a Set of roles is being created.
-     *  Then it is assigned to the employee entity.
+     *  Then it is assigned to the user entity.
      *
      *  Params: selectedRoles - Contains comma separated roles in String
-     *          employee - Contains an entity
+     *          user - Contains an entity
      * */
-    private void setSelectedRolesToEmployee(Employee employee, String selectedRoles) {
+    private void setSelectedRolesToUser(User user, String selectedRoles) {
         List<Role> listOfAvailableRoles = roleRepository.findAll();
         Set<Role> setOfRolesToAdd = new LinkedHashSet<>();
 
@@ -216,7 +216,7 @@ public class EmployeeController {
             }
         }
 
-        employee.setRoles(setOfRolesToAdd);
+        user.setRoles(setOfRolesToAdd);
     }
 
 

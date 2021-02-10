@@ -166,11 +166,11 @@
             <li <c:if test="${URI.contains('user-management')}">class="open" </c:if>>
                 <a href="#">
                     <i class="nav-link-icon" data-feather="user"></i>
-                    <span>Employee</span>
+                    <span>User</span>
                 </a>
                 <ul>
-                    <li><a <c:if test="${URI.contains('add-employee-form')}">class="active"</c:if> href="/add-employee-form">Add Employee</a></li>
-                    <li><a <c:if test="${URI.contains('employee-list')}">class="active"</c:if> href="/employee-list">Employees</a></li>
+                    <li><a <c:if test="${URI.contains('add-user-form')}">class="active"</c:if> href="/add-user-form">Add User</a></li>
+                    <li><a <c:if test="${URI.contains('user-list')}">class="active"</c:if> href="/user-list">Users</a></li>
                 </ul>
             </li>
             <li <c:if test="${URI.contains('role-management')}">class="open" </c:if>>

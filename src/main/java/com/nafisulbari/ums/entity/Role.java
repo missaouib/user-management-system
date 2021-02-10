@@ -3,7 +3,6 @@ package com.nafisulbari.ums.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -25,7 +24,7 @@ public class Role {
     private String name;
 
     @ManyToMany(mappedBy = "roles")
-    private Set<Employee> employees;
+    private Set<User> users;
 
 
     public Role(){}

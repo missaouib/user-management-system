@@ -42,7 +42,7 @@
                         <td>${role.name}</td>
 
                         <td><a href="/edit-role-form/${role.id}" class="btn btn-secondary btn-sm text-white">Edit</a></td>
-                            <%--todo implement edit and delete employee action --%>
+                            <%--todo implement edit and delete user action --%>
                     </tr>
                 </c:forEach>
 

@@ -12,7 +12,8 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-public class Employee {
+@Table(name = "user_table")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -20,7 +21,7 @@ public class Employee {
 
     @NotNull
     @Digits(integer = 6, fraction = 0, message = "Must be a 6 digit number")
-    private int employeeId;
+    private int userId;
 
     @NotNull
     @NotEmpty
@@ -76,13 +77,13 @@ public class Employee {
     private String status;
 
 
-    public Employee() {
+    public User() {
     }
 
-    public Employee(Optional<Employee> optionalEmployee) {
-        optionalEmployee.ifPresent(e -> {
+    public User(Optional<User> optionalUser) {
+        optionalUser.ifPresent(e -> {
             this.id = e.getId();
-            this.employeeId = e.getEmployeeId();
+            this.userId = e.getUserId();
             this.firstName = e.getFirstName();
             this.lastName = e.getLastName();
             this.password = e.getPassword();

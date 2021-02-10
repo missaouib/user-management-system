@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 @Configuration
@@ -35,9 +34,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        http
 //                .authorizeRequests()
 //                .antMatchers("/", "/registration").permitAll()
-//                .antMatchers("/add-employee-form").hasRole("USER")
+//                .antMatchers("/add-user-form").hasRole("USER")
 //                .and()
-//                .formLogin().loginPage("/login").permitAll().successForwardUrl("/employee-list")
+//                .formLogin().loginPage("/login").permitAll().successForwardUrl("/user-list")
 //                .and()
 //                .logout()
 //                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
@@ -53,4 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
+
+
+
 }

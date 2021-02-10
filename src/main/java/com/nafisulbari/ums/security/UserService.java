@@ -1,11 +1,11 @@
 package com.nafisulbari.ums.security;
 
-import com.nafisulbari.ums.entity.Employee;
+import com.nafisulbari.ums.entity.User;
 
 public interface UserService {
 
-    void save(Employee employee);
+    void save(User user);
 
-    Employee findByEmployeeId(String employeeId);
+    User findByUserId(String userId);
 
 }
