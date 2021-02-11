@@ -1,22 +1,23 @@
 package com.nafisulbari.ums.security;
 
-import com.nafisulbari.ums.entity.User;
-import com.nafisulbari.ums.entity.Role;
-import com.nafisulbari.ums.repository.UserRepository;
+import com.nafisulbari.ums.persistence.model.RoleToPrivilege;
+import com.nafisulbari.ums.persistence.model.User;
+import com.nafisulbari.ums.persistence.model.UserToRole;
+import com.nafisulbari.ums.persistence.dao.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Set;
 
 
-@Service
+@Component
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 
@@ -30,12 +31,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userRepository.findByUserId(Integer.parseInt(username));
         if (user == null) throw new UsernameNotFoundException(username);
 
-        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-        for (Role role : user.getRoles()) {
-            grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
+        Set<GrantedAuthority> authorities = new HashSet<>();
+
+        for (UserToRole userToRole : user.getUserToRoles()) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + userToRole.getRole().getRoleName()));
+
+            for (RoleToPrivilege roleToPrivilege : userToRole.getRole().getRoleToPrivileges()) {
+                authorities.add(new SimpleGrantedAuthority(roleToPrivilege.getPrivilege().getPrivilegeName()));
+            }
+
         }
 
 
-        return new org.springframework.security.core.userdetails.User(user.getLastName(), user.getPassword(), grantedAuthorities);
+        return new CustomUserDetails(user, authorities);
+
     }
 }
