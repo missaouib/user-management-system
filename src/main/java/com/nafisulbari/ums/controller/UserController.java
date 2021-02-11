@@ -1,9 +1,9 @@
 package com.nafisulbari.ums.controller;
 
-import com.nafisulbari.ums.entity.User;
-import com.nafisulbari.ums.entity.Role;
-import com.nafisulbari.ums.repository.UserRepository;
-import com.nafisulbari.ums.repository.RoleRepository;
+import com.nafisulbari.ums.persistence.model.Role;
+import com.nafisulbari.ums.persistence.model.User;
+import com.nafisulbari.ums.persistence.dao.RoleRepository;
+import com.nafisulbari.ums.persistence.dao.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,18 +26,18 @@ public class UserController {
     RoleRepository roleRepository;
 
 
-    @GetMapping("/")
-    public String getHomePage(Model model) {
+    @RequestMapping("/")
+    public ModelAndView getHomePage(Model model) {
 
-        return "index";
+        return new ModelAndView("index");
     }
 
 
     @RequestMapping(value = "user-list")
-    public String showUserList(Model model) {
+    public ModelAndView showUserList(Model model) {
         model.addAttribute("listOfUsers", userRepository.findAll());
 
-        return "user-management/user-list";
+        return new ModelAndView("user-management/user-list");
     }
 
 
@@ -171,7 +171,7 @@ public class UserController {
         }
 
         role.setId(tempRole.get().getId());
-        roleRepository.saveAndFlush(role);
+        roleRepository.save(role);
 
         return new ModelAndView("redirect:/role-list");
     }
@@ -186,7 +186,7 @@ public class UserController {
             roleRepository.deleteById(id);
         } catch (Exception e) {
             e.printStackTrace();
-            Role role = roleRepository.getOne(id);
+            Optional<Role> role = roleRepository.findById(id);
             model.addAttribute("role", role);
             model.addAttribute("message", "Unable to delete role because its been assigned to users");
 
@@ -207,16 +207,16 @@ public class UserController {
      *          user - Contains an entity
      * */
     private void setSelectedRolesToUser(User user, String selectedRoles) {
-        List<Role> listOfAvailableRoles = roleRepository.findAll();
-        Set<Role> setOfRolesToAdd = new LinkedHashSet<>();
-
-        for (Role role : listOfAvailableRoles) {
-            if (selectedRoles.contains(role.getName())) {
-                setOfRolesToAdd.add(role);
-            }
-        }
-
-        user.setRoles(setOfRolesToAdd);
+//        List<Role> listOfAvailableRoles = (List<Role>) roleRepository.findAll();
+//        List<Role> setOfRolesToAdd = new ArrayList<>();
+//
+//        for (Role role : listOfAvailableRoles) {
+//            if (selectedRoles.contains(role.getRoleName())) {
+//                setOfRolesToAdd.add(role);
+//            }
+//        }
+//
+//        user.setUserToRoles(setOfRolesToAdd);
     }
 
 
