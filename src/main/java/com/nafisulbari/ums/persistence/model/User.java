@@ -1,4 +1,4 @@
-package com.nafisulbari.ums.entity;
+package com.nafisulbari.ums.persistence.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,17 +6,17 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-@Table(name = "user_table")
+@Table(name = "user_account")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotNull
@@ -69,8 +69,8 @@ public class User {
     @DateTimeFormat
     private String joiningDate;
 
-    @ManyToMany
-    private Set<Role> roles;
+    @OneToMany(mappedBy = "user")
+    private List<UserToRole> userToRoles;
 
     @NotNull
     @NotEmpty
@@ -96,7 +96,7 @@ public class User {
             this.joiningDate = e.getJoiningDate();
             this.mobile = e.getMobile();
             this.status = e.getStatus();
-            this.roles = e.getRoles();
+            this.userToRoles = e.getUserToRoles();
 
         });
     }
