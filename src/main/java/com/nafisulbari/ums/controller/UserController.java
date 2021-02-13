@@ -1,8 +1,10 @@
 package com.nafisulbari.ums.controller;
 
 import com.nafisulbari.ums.persistence.dao.PrivilegeRepository;
+import com.nafisulbari.ums.persistence.dao.RoleToPrivilegeRepository;
 import com.nafisulbari.ums.persistence.model.Privilege;
 import com.nafisulbari.ums.persistence.model.Role;
+import com.nafisulbari.ums.persistence.model.RoleToPrivilege;
 import com.nafisulbari.ums.persistence.model.User;
 import com.nafisulbari.ums.persistence.dao.RoleRepository;
 import com.nafisulbari.ums.persistence.dao.UserRepository;
@@ -29,6 +31,9 @@ public class UserController {
 
     @Autowired
     PrivilegeRepository privilegeRepository;
+
+    @Autowired
+    RoleToPrivilegeRepository roleToPrivilegeRepository;
 
 
     @RequestMapping("/")
@@ -286,6 +291,17 @@ public class UserController {
         return new ModelAndView("privilege-management/privilege-list");
     }
 
+
+
+    @GetMapping("roles-privileges/{id}")
+    public ModelAndView getRolesToPrivilegesView(@PathVariable("id") int id, Model model) {
+        Optional<Role> optionalRole = roleRepository.findById(id);
+        Role role = new Role(optionalRole);
+        model.addAttribute("role", role);
+        model.addAttribute("listOfPrivileges", privilegeRepository.findAll());
+
+        return new ModelAndView("role-management/roles-privileges");
+    }
 
     /**
      * List of Roles are fetched from the repository and are checked with selectedRoles.
