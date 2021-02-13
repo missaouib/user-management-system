@@ -19,52 +19,41 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotNull
     @Digits(integer = 6, fraction = 0, message = "Must be a 6 digit number")
     private int userId;
 
-    @NotNull
     @NotEmpty
     @Pattern(regexp = "^[ A-Za-z]+$", message = "Only letters and spaces are allowed")
     private String firstName;
 
-    @NotNull
     @NotEmpty
     private String password;
 
-    @NotNull
     @NotEmpty
     @Pattern(regexp = "^[ A-Za-z]+$", message = "Only letters and spaces are allowed")
     private String lastName;
 
-    @NotNull
     @NotEmpty
     private String company;
 
-    @NotNull
     @NotEmpty
     private String department;
 
-    @NotNull
     @NotEmpty
     private String designation;
 
-    @NotNull
     @NotEmpty
     private String workLocation;
 
-    @NotNull
     @Email
     @NotEmpty
     private String email;
 
-    @NotNull
     @Digits(integer = 11, fraction = 0, message = "Only 11 digit numbers are allowed")
     private int mobile;
 
     private String extension;
 
-    @NotNull
     @NotEmpty
     @DateTimeFormat
     private String joiningDate;
@@ -72,7 +61,6 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<UserToRole> userToRoles;
 
-    @NotNull
     @NotEmpty
     private String status;
 

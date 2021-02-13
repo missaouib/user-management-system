@@ -3,10 +3,10 @@ package com.nafisulbari.ums.persistence.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import java.util.Optional;
 
 @Entity
 @Getter
@@ -16,6 +16,17 @@ public class Privilege {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String privilegeName;
 
+    @NotBlank
+    @Column(name = "PRIVILEGE_NAME")
+    private String url;
+
+    public Privilege(){}
+
+    public Privilege(Optional<Privilege> optionalPrivilege) {
+        optionalPrivilege.ifPresent(p ->{
+            this.id = p.getId();
+            this.url = p.getUrl();
+        });
+    }
 }

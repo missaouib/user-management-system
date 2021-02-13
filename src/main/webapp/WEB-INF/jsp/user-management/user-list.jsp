@@ -51,11 +51,11 @@
                         <td>${user.department}</td>
                         <td>${user.status}</td>
                         <td>
-                            <c:forEach items = "${user.userToRoles}" var = "role">
-                                ${role.role.roleName}
-                            </c:forEach>
+<%--                            <c:forEach items = "${user.userToRoles}" var = "role">--%>
+<%--                                ${role.role.roleName}--%>
+<%--                            </c:forEach>--%>
                         </td>
-                        <td><a href="/edit-user-form/${user.id}" class="btn btn-secondary btn-sm text-white">Edit</a></td>
+                        <td><a href="edit-user/${user.id}" class="btn btn-secondary btn-sm text-white">Edit</a></td>
                             <%--todo implement edit and delete user action --%>
                     </tr>
                 </c:forEach>

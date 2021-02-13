@@ -17,7 +17,8 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String roleName;
+    @Column(name = "ROLE_NAME")
+    private String name;
 
     @OneToMany(mappedBy = "role")
     private List<RoleToPrivilege> roleToPrivileges;
@@ -28,8 +29,10 @@ public class Role {
     public Role(Optional<Role> optionalRole) {
         optionalRole.ifPresent(r -> {
             this.id = r.getId();
-            this.roleName = r.getRoleName();
+            this.name = r.getName();
             this.roleToPrivileges = r.getRoleToPrivileges();
         });
     }
+
+
 }

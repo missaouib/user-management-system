@@ -109,18 +109,18 @@
 
             <div class="form-row">
                 <h5>Roles: </h5>
-                <c:forEach items="${roles}" var="role">
-                    <div class="col">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="selectedRoles"
-                                   value="${role.name}" <c:if test="${user.roles.contains(role)}">checked</c:if>>
-                            <label class="form-check-label" for="${role.name}">
-                                    ${role.name}
-                            </label>
-                        </div>
+<%--                <c:forEach items="${roles}" var="role">--%>
+<%--                    <div class="col">--%>
+<%--                        <div class="form-check">--%>
+<%--                            <input class="form-check-input" type="checkbox" name="selectedRoles"--%>
+<%--                                   value="${role.name}" <c:if test="${user.roles.contains(role)}">checked</c:if>>--%>
+<%--                            <label class="form-check-label" for="${role.name}">--%>
+<%--                                    ${role.name}--%>
+<%--                            </label>--%>
+<%--                        </div>--%>
 
-                    </div>
-                </c:forEach>
+<%--                    </div>--%>
+<%--                </c:forEach>--%>
             </div>
         <div class="row">
             <div class="col-md-3"></div>

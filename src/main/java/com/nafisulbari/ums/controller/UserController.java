@@ -1,5 +1,7 @@
 package com.nafisulbari.ums.controller;
 
+import com.nafisulbari.ums.persistence.dao.PrivilegeRepository;
+import com.nafisulbari.ums.persistence.model.Privilege;
 import com.nafisulbari.ums.persistence.model.Role;
 import com.nafisulbari.ums.persistence.model.User;
 import com.nafisulbari.ums.persistence.dao.RoleRepository;
@@ -25,6 +27,9 @@ public class UserController {
     @Autowired
     RoleRepository roleRepository;
 
+    @Autowired
+    PrivilegeRepository privilegeRepository;
+
 
     @RequestMapping("/")
     public ModelAndView getHomePage(Model model) {
@@ -33,7 +38,7 @@ public class UserController {
     }
 
 
-    @RequestMapping(value = "user-list")
+    @GetMapping("user-list")
     public ModelAndView showUserList(Model model) {
         model.addAttribute("listOfUsers", userRepository.findAll());
 
@@ -41,24 +46,24 @@ public class UserController {
     }
 
 
-    @RequestMapping(value = "add-user-form", method = RequestMethod.GET)
+    @GetMapping("add-user")
     public String showAddUserForm(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("roles", roleRepository.findAll());
 
-        return "user-management/add-user-form";
+        return "user-management/add-user";
     }
 
 
-    @RequestMapping(value = "add-user", method = RequestMethod.POST)
+    @PostMapping("add-user")
     public ModelAndView submitAddUserForm(@Valid @ModelAttribute("user") User user,
-                                              BindingResult result,
-                                              @RequestParam(name = "selectedRoles", required = false, defaultValue = "NOROLE") String selectedRoles,
-                                              Model model) {
+                                          BindingResult result,
+                                          @RequestParam(name = "selectedRoles", required = false, defaultValue = "NOROLE") String selectedRoles,
+                                          Model model) {
 
         if (result.hasErrors()) {
             model.addAttribute("roles", roleRepository.findAll());
-            return new ModelAndView("user-management/add-user-form");
+            return new ModelAndView("user-management/add-user");
         }
 
         setSelectedRolesToUser(user, selectedRoles);
@@ -68,7 +73,7 @@ public class UserController {
     }
 
 
-    @RequestMapping(value = "edit-user-form/{id}", method = RequestMethod.GET)
+    @GetMapping("edit-user/{id}")
     public ModelAndView showEditUserForm(@PathVariable("id") int id, Model model) {
         Optional<User> optionalUser = userRepository.findById(id);
         if (!optionalUser.isPresent()) {
@@ -78,22 +83,22 @@ public class UserController {
         model.addAttribute("user", user);
         model.addAttribute("roles", roleRepository.findAll());
 
-        return new ModelAndView("user-management/edit-user-form");
+        return new ModelAndView("user-management/edit-user");
     }
 
 
-    @RequestMapping(value = "update-user/{id}", method = RequestMethod.POST)
+    @PostMapping("update-user/{id}")
     public ModelAndView submitEditUserForm(@Valid @ModelAttribute("user") User user,
-                                               BindingResult result,
-                                               @PathVariable("id") int id,
-                                               @RequestParam(name = "selectedRoles", required = false, defaultValue = "NOROLE") String selectedRoles,
-                                               Model model) {
+                                           BindingResult result,
+                                           @PathVariable("id") int id,
+                                           @RequestParam(name = "selectedRoles", required = false,
+                                                   defaultValue = "NOROLE") String selectedRoles) {
 
         // somehow if we are not calling the tempUser for nothing, user is not consisting any id.
         // also it wont work without the @PathVariable for unknown reason.
         Optional<User> tempUser = userRepository.findById(user.getId());
         if (result.hasErrors() || !tempUser.isPresent()) {
-            return new ModelAndView("user-management/edit-user-form");
+            return new ModelAndView("user-management/edit-user");
         }
 
         setSelectedRolesToUser(user, selectedRoles);
@@ -103,7 +108,7 @@ public class UserController {
     }
 
 
-    @RequestMapping(value = "delete-user/{id}", method = RequestMethod.POST)
+    @PostMapping("delete-user/{id}")
     public ModelAndView deleteUser(@PathVariable("id") int id) {
 
         userRepository.deleteById(id);
@@ -114,7 +119,7 @@ public class UserController {
 
     //-------------------------------------------------------------------------
 
-    @RequestMapping(value = "role-list")
+    @GetMapping("role-list")
     public String showRoleList(Model model) {
         model.addAttribute("listOfRoles", roleRepository.findAll());
 
@@ -122,20 +127,19 @@ public class UserController {
     }
 
 
-    @RequestMapping(value = "add-role-form", method = RequestMethod.GET)
+    @GetMapping("add-role")
     public String showAddRoleForm(Model model) {
         model.addAttribute("role", new Role());
 
-        return "role-management/add-role-form";
+        return "role-management/add-role";
     }
 
 
-    @RequestMapping(value = "add-role", method = RequestMethod.POST)
+    @PostMapping("add-role")
     public ModelAndView submitAddRoleForm(@Valid @ModelAttribute("role") Role role,
-                                          BindingResult result,
-                                          Model model) {
+                                          BindingResult result) {
         if (result.hasErrors()) {
-            return new ModelAndView("role-management/add-role-form");
+            return new ModelAndView("role-management/add-role");
         }
         roleRepository.save(role);
 
@@ -143,7 +147,7 @@ public class UserController {
     }
 
 
-    @RequestMapping(value = "edit-role-form/{id}", method = RequestMethod.GET)
+    @GetMapping("edit-role/{id}")
     public ModelAndView showEditRoleForm(@PathVariable("id") int id, Model model) {
         Optional<Role> optionalRole = roleRepository.findById(id);
 
@@ -153,21 +157,19 @@ public class UserController {
         Role role = new Role(optionalRole);
         model.addAttribute("role", role);
 
-        return new ModelAndView("role-management/edit-role-form");
+        return new ModelAndView("role-management/edit-role");
     }
 
 
-    @RequestMapping(value = "update-role/{id}", method = RequestMethod.POST)
+    @PostMapping("update-role/{id}")
     public ModelAndView submitEditRoleForm(@Valid @ModelAttribute("role") Role role,
                                            BindingResult result,
-                                           @PathVariable("id") int id,
-                                           Model model) {
-
+                                           @PathVariable("id") int id) {
         // somehow if we are not calling the tempUser for nothing, user is not consisting any id.
         // also it wont work without the @PathVariable for unknown reason.
         Optional<Role> tempRole = roleRepository.findById(id);
         if (result.hasErrors() || !tempRole.isPresent()) {
-            return new ModelAndView("role-management/edit-role-form");
+            return new ModelAndView("role-management/edit-role");
         }
 
         role.setId(tempRole.get().getId());
@@ -177,7 +179,7 @@ public class UserController {
     }
 
 
-    @RequestMapping(value = "delete-role/{id}", method = RequestMethod.POST)
+    @PostMapping("delete-role/{id}")
     public ModelAndView deleteRole(@PathVariable("id") int id, Model model) {
 
 
@@ -186,26 +188,113 @@ public class UserController {
             roleRepository.deleteById(id);
         } catch (Exception e) {
             e.printStackTrace();
-            Optional<Role> role = roleRepository.findById(id);
+            Optional<Role> optionalRole = roleRepository.findById(id);
+            Role role = new Role(optionalRole);
             model.addAttribute("role", role);
             model.addAttribute("message", "Unable to delete role because its been assigned to users");
 
-            return new ModelAndView("role-management/edit-role-form");
+            return new ModelAndView("role-management/edit-role");
         }
 
         return new ModelAndView("redirect:/role-list");
     }
 
 
+    //-------------------------------------------------------------------------
+
+    @GetMapping("add-privilege")
+    public ModelAndView getAddPrivilegeView(Model model) {
+
+        model.addAttribute("privilege", new Privilege());
+
+        return new ModelAndView("privilege-management/add-privilege");
+    }
+
+
+    @PostMapping("add-privilege")
+    public ModelAndView addPrivilegeAction(@Valid @ModelAttribute("privilege") Privilege privilege,
+                                           BindingResult result) {
+        if (result.hasErrors()) {
+
+            return new ModelAndView("privilege-management/add-privilege");
+        }
+        privilegeRepository.save(privilege);
+
+        return new ModelAndView("redirect:/privilege-list");
+    }
+
+
+    @GetMapping("edit-privilege/{id}")
+    public ModelAndView getEditPrivilegeView(@PathVariable("id") int id, Model model) {
+        Optional<Privilege> optionalPrivilege = privilegeRepository.findById(id);
+
+        if (!optionalPrivilege.isPresent()) {
+            return new ModelAndView("redirect:/error");
+        }
+        Privilege privilege = new Privilege(optionalPrivilege);
+        model.addAttribute("privilege", privilege);
+
+        return new ModelAndView("privilege-management/edit-privilege");
+    }
+
+
+    @PostMapping("update-privilege/{id}")
+    public ModelAndView updatePrivilege(@Valid @ModelAttribute("privilege") Privilege privilege,
+                                        BindingResult result,
+                                        @PathVariable("id") int id) {
+
+        // somehow if we are not calling the tempPrivilege for nothing, user is not consisting any id.
+        // also it wont work without the @PathVariable for unknown reason.
+        Optional<Privilege> tempPrivilege = privilegeRepository.findById(id);
+        if (result.hasErrors() || !tempPrivilege.isPresent()) {
+            return new ModelAndView("privilege-management/edit-privilege");
+        }
+
+        privilege.setId(tempPrivilege.get().getId());
+        privilegeRepository.save(privilege);
+
+        return new ModelAndView("redirect:/privilege-list");
+    }
+
+
+    @PostMapping("delete-privilege/{id}")
+    public ModelAndView deletePrivilege(@PathVariable("id") int id, Model model) {
+
+
+        //todo if exception found(privileges been assigned) therefore don't allow delete
+        try {
+            privilegeRepository.deleteById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Optional<Privilege> optionalPrivilege = privilegeRepository.findById(id);
+            Privilege privilege = new Privilege(optionalPrivilege);
+
+            model.addAttribute("privilege", privilege);
+            model.addAttribute("message", "Unable to delete Privilege because its been assigned to Roles");
+
+            return new ModelAndView("privilege-management/edit-privilege");
+        }
+
+        return new ModelAndView("redirect:/privilege-list");
+    }
+
+
+    @RequestMapping("privilege-list")
+    public ModelAndView getPrivilegeListView(Model model) {
+        model.addAttribute("listOfPrivileges", privilegeRepository.findAll());
+
+        return new ModelAndView("privilege-management/privilege-list");
+    }
+
 
     /**
-     *  List of Roles are fetched from the repository and are checked with selectedRoles.
-     *  If they match a Set of roles is being created.
-     *  Then it is assigned to the user entity.
-     *
-     *  Params: selectedRoles - Contains comma separated roles in String
-     *          user - Contains an entity
-     * */
+     * List of Roles are fetched from the repository and are checked with selectedRoles.
+     * If they match a Set of roles is being created.
+     * Then it is assigned to the user entity.
+     * <p>
+     * Params: selectedRoles - Contains comma separated roles in String
+     * user - Contains an entity
+     */
     private void setSelectedRolesToUser(User user, String selectedRoles) {
 //        List<Role> listOfAvailableRoles = (List<Role>) roleRepository.findAll();
 //        List<Role> setOfRolesToAdd = new ArrayList<>();
