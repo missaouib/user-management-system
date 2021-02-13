@@ -34,10 +34,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Set<GrantedAuthority> authorities = new HashSet<>();
 
         for (UserToRole userToRole : user.getUserToRoles()) {
-            authorities.add(new SimpleGrantedAuthority("ROLE_" + userToRole.getRole().getRoleName()));
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + userToRole.getRole().getName()));
 
             for (RoleToPrivilege roleToPrivilege : userToRole.getRole().getRoleToPrivileges()) {
-                authorities.add(new SimpleGrantedAuthority(roleToPrivilege.getPrivilege().getPrivilegeName()));
+                authorities.add(new SimpleGrantedAuthority(roleToPrivilege.getPrivilege().getUrl()));
             }
 
         }

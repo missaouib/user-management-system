@@ -1,5 +1,7 @@
 package com.nafisulbari.ums.security;
 
+import com.nafisulbari.ums.persistence.dao.PrivilegeRepository;
+import com.nafisulbari.ums.persistence.model.Privilege;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -7,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,6 +26,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    PrivilegeRepository privilegeRepository;
+
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -32,10 +38,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        //setAuthorityToUrls(http);
+
         http
                 .authorizeRequests()
-                .antMatchers("/", "/registration").permitAll()
-                .antMatchers("/user-list").hasAuthority("canReadUser")
+//                .antMatchers("/", "/registration").permitAll()
+//                .antMatchers("/**").hasRole("ADMIN")
                 .and()
                 .formLogin().loginPage("/login").permitAll().successForwardUrl("/")
                 .and()
@@ -53,6 +62,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+    }
+
+
+    @Override
+    public void configure(final WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/static/**");
+    }
+
+
+    private void setAuthorityToUrls(HttpSecurity http) throws Exception {
+        http.authorizeRequests((requests) -> {
+            for (Privilege privilege : privilegeRepository.findAll()) {
+                String privilegeUrl = privilege.getUrl();
+                requests.antMatchers(privilegeUrl).hasAuthority(privilegeUrl);
+            }
+        });
     }
 
 
