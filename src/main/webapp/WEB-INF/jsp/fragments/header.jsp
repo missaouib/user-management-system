@@ -21,9 +21,9 @@
     <!-- begin::header-logo -->
     <div id="header-logo">
         <a href="/user-list">
-            <img class="logo" src="/assets/media/image/logo.png" alt="logo">
-            <img class="logo-sm" src="/assets/media/image/logo-sm.png" alt="small logo">
-            <img class="logo-light" src="/assets/media/image/logo-light.png" alt="light logo">
+            <img class="logo" src="/static/assets/media/image/logo.png" alt="logo">
+            <img class="logo-sm" src="/static/assets/media/image/logo-sm.png" alt="small logo">
+            <img class="logo-light" src="/static/assets/media/image/logo-light.png" alt="light logo">
         </a>
     </div>
     <!-- end::header-logo -->
@@ -101,23 +101,23 @@
 
                 <li class="nav-item">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                        <img width="18" class="mr-2" src="assets/media/image/flags/261-china.png" alt="flag"> China
+                        <img width="18" class="mr-2" src="/static/assets/media/image/flags/261-china.png" alt="flag"> China
                     </a>
                     <div class="dropdown-menu">
                         <a href="#" class="dropdown-item">
-                            <img width="18" src="assets/media/image/flags/003-tanzania.png" class="mr-2" alt="flag">
+                            <img width="18" src="/static/assets/media/image/flags/003-tanzania.png" class="mr-2" alt="flag">
                             Tanzania
                         </a>
                         <a href="#" class="dropdown-item">
-                            <img width="18" src="assets/media/image/flags/262-united-kingdom.png" class="mr-2"
+                            <img width="18" src="/static/assets/media/image/flags/262-united-kingdom.png" class="mr-2"
                                  alt="flag"> United Kingdom
                         </a>
                         <a href="#" class="dropdown-item">
-                            <img width="18" src="assets/media/image/flags/013-tunisia.png" class="mr-2" alt="flag">
+                            <img width="18" src="/static/assets/media/image/flags/013-tunisia.png" class="mr-2" alt="flag">
                             Tunisia
                         </a>
                         <a href="#" class="dropdown-item">
-                            <img width="18" src="assets/media/image/flags/044-spain.png" class="mr-2" alt="flag"> Spain
+                            <img width="18" src="/static/assets/media/image/flags/044-spain.png" class="mr-2" alt="flag"> Spain
                         </a>
                     </div>
                 </li>

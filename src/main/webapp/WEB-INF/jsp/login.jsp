@@ -32,8 +32,8 @@
 
     <!-- logo -->
     <div id="logo">
-        <img class="logo" src="/assets/media/image/logo.png" alt="image">
-        <img class="logo-dark" src="/assets/media/image/logo-dark.png" alt="image">
+        <img class="logo" src="/static/assets/media/image/logo.png" alt="image">
+        <img class="logo-dark" src="/static/assets/media/image/logo-dark.png" alt="image">
     </div>
     <!-- ./ logo -->
 
@@ -70,10 +70,10 @@
 
 <jsp:include page="fragments/footer.jsp"/>
 <!-- Plugin scripts -->
-<script src="/vendors/bundle.js"></script>
+<script src="/static/vendors/bundle.js"></script>
 
 <!-- App scripts -->
-<script src="/assets/js/app.min.js"></script>
+<script src="/static/assets/js/app.min.js"></script>
 </body>
 
 

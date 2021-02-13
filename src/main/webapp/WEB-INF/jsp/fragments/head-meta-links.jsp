@@ -5,16 +5,16 @@
 
 <!-- Favicon -->
 
-<link rel="shortcut icon" href="/assets/media/image/favicon.png"/>
+<link rel="shortcut icon" href="/static/assets/media/image/favicon.png"/>
 
 <!-- Plugin styles -->
-<link rel="stylesheet" href="/vendors/bundle.css" type="text/css">
+<link rel="stylesheet" href="/static/vendors/bundle.css" type="text/css">
 
 <!-- Datepicker -->
-<link rel="stylesheet" href="/vendors/datepicker/daterangepicker.css">
+<link rel="stylesheet" href="/static/vendors/datepicker/daterangepicker.css">
 
 <!-- Vmap -->
-<link rel="stylesheet" href="/vendors/vmap/jqvmap.min.css">
+<link rel="stylesheet" href="/static/vendors/vmap/jqvmap.min.css">
 
 <!-- App styles -->
-<link rel="stylesheet" href="/assets/css/app.min.css" type="text/css">
+<link rel="stylesheet" href="/static/assets/css/app.min.css" type="text/css">

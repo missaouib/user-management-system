@@ -109,17 +109,17 @@
             </div>
             <div class="form-row">
                 <h5>Roles: </h5>
-                <c:forEach items="${roles}" var="role">
-                    <div class="col">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="selectedRoles"
-                                   value="${role.name}">
-                            <label class="form-check-label" for="${role.name}">
-                                    ${role.name}
-                            </label>
-                        </div>
-                    </div>
-                </c:forEach>
+<%--                <c:forEach items="${roles}" var="role">--%>
+<%--                    <div class="col">--%>
+<%--                        <div class="form-check">--%>
+<%--                            <input class="form-check-input" type="checkbox" name="selectedRoles"--%>
+<%--                                   value="${role.name}">--%>
+<%--                            <label class="form-check-label" for="${role.name}">--%>
+<%--                                    ${role.name}--%>
+<%--                            </label>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                </c:forEach>--%>
             </div>
 
             <button class="btn btn-primary" type="submit">Add User</button>
