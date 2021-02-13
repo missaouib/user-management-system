@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
 
-    <title>List Of Roles</title>
+    <title>List Of Privileges</title>
 
     <jsp:include page="../fragments/head-meta-links.jsp"/>
 
@@ -22,26 +22,26 @@
     <!-- begin::main-content -->
     <div class="main-content">
         <div class="row mb-3">
-            <div class="col-md-8"><h3 class="h3">List of roles</h3></div>
-            <div class="col-md-4"><a class="btn btn-primary float-right text-white" href="add-role">Add Role</a></div>
+            <div class="col-md-8"><h3 class="h3">List of privileges</h3></div>
+            <div class="col-md-4"><a class="btn btn-primary float-right text-white" href="add-privilege">Add Privilege</a></div>
         </div>
         <div class="table-responsive">
             <table class="table">
                 <thead>
                 <tr>
-                    <th scope="col">Role Id</th>
-                    <th scope="col">Role Name</th>
+                    <th scope="col">Privilege Id</th>
+                    <th scope="col">Privilege URL</th>
                     <th scope="col">Edit Role</th>
                 </tr>
                 </thead>
                 <tbody>
 
-                <c:forEach items = "${listOfRoles}" var = "role">
+                <c:forEach items = "${listOfPrivileges}" var = "privilege">
                     <tr>
-                        <td>${role.id}</td>
-                        <td>${role.name}</td>
+                        <td>${privilege.id}</td>
+                        <td>${privilege.url}</td>
 
-                        <td><a href="/edit-role/${role.id}" class="btn btn-secondary btn-sm text-white">Edit</a></td>
+                        <td><a href="/edit-privilege/${privilege.id}" class="btn btn-secondary btn-sm text-white">Edit</a></td>
                             <%--todo implement edit and delete user action --%>
                     </tr>
                 </c:forEach>
