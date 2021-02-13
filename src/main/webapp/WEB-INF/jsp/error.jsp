@@ -19,9 +19,9 @@
 </div>
 
 <!-- Plugin scripts -->
-<script src="vendors/bundle.js"></script>
+<script src="static/vendors/bundle.js"></script>
 
 <!-- App scripts -->
-<script src="assets/js/app.min.js"></script>
+<script src="static/assets/js/app.min.js"></script>
 </body>
 </html>
