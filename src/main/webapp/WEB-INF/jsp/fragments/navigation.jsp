@@ -169,7 +169,7 @@
                     <span>User</span>
                 </a>
                 <ul>
-                    <li><a <c:if test="${URI.contains('add-user-form')}">class="active"</c:if> href="/add-user-form">Add User</a></li>
+                    <li><a <c:if test="${URI.contains('add-user')}">class="active"</c:if> href="/add-user">Add User</a></li>
                     <li><a <c:if test="${URI.contains('user-list')}">class="active"</c:if> href="/user-list">Users</a></li>
                 </ul>
             </li>
@@ -179,8 +179,18 @@
                     <span>Role</span>
                 </a>
                 <ul>
-                    <li><a <c:if test="${URI.contains('add-role-form')}">class="active"</c:if> href="/add-role-form">Add Role</a></li>
+                    <li><a <c:if test="${URI.contains('add-role')}">class="active"</c:if> href="/add-role">Add Role</a></li>
                     <li><a <c:if test="${URI.contains('role-list')}">class="active"</c:if> href="/role-list">Roles</a></li>
+                </ul>
+            </li>
+            <li <c:if test="${URI.contains('privilege-management')}">class="open" </c:if>>
+                <a href="#">
+                    <i class="nav-link-icon" data-feather="sliders"></i>
+                    <span>Privileges</span>
+                </a>
+                <ul>
+                    <li><a <c:if test="${URI.contains('add-privilege')}">class="active"</c:if> href="/add-privilege">Add Privilege</a></li>
+                    <li><a <c:if test="${URI.contains('privilege-list')}">class="active"</c:if> href="/privilege-list">Privileges</a></li>
                 </ul>
             </li>
             <li class="navigation-divider">Extras</li>
