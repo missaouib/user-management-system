@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- begin::navigation -->
 <div class="navigation">
-<c:set var="URI" value="${pageContext.request.requestURI}"/>
+    <c:set var="URI" value="${pageContext.request.requestURI}"/>
 
     <!-- begin::navigation menu -->
     <div class="navigation-menu-body">
@@ -169,8 +169,11 @@
                     <span>User</span>
                 </a>
                 <ul>
-                    <li><a <c:if test="${URI.contains('add-user')}">class="active"</c:if> href="/add-user">Add User</a></li>
-                    <li><a <c:if test="${URI.contains('user-list')}">class="active"</c:if> href="/user-list">Users</a></li>
+                    <li><a
+                            <c:if test="${URI.contains('add-user')}">class="active"</c:if> href="/add-user">Add</a></li>
+                    <li><a
+                            <c:if test="${URI.contains('user-list')}">class="active"</c:if> href="/user-list">Users</a>
+                    </li>
                 </ul>
             </li>
             <li <c:if test="${URI.contains('role-management')}">class="open" </c:if>>
@@ -179,8 +182,11 @@
                     <span>Role</span>
                 </a>
                 <ul>
-                    <li><a <c:if test="${URI.contains('add-role')}">class="active"</c:if> href="/add-role">Add Role</a></li>
-                    <li><a <c:if test="${URI.contains('role-list')}">class="active"</c:if> href="/role-list">Roles</a></li>
+                    <li><a
+                            <c:if test="${URI.contains('add-role')}">class="active"</c:if> href="/add-role">Add</a></li>
+                    <li><a
+                            <c:if test="${URI.contains('role-list')}">class="active"</c:if> href="/role-list">Roles</a>
+                    </li>
                 </ul>
             </li>
             <li <c:if test="${URI.contains('privilege-management')}">class="open" </c:if>>
@@ -189,8 +195,12 @@
                     <span>Privileges</span>
                 </a>
                 <ul>
-                    <li><a <c:if test="${URI.contains('add-privilege')}">class="active"</c:if> href="/add-privilege">Add Privilege</a></li>
-                    <li><a <c:if test="${URI.contains('privilege-list')}">class="active"</c:if> href="/privilege-list">Privileges</a></li>
+                    <li><a
+                            <c:if test="${URI.contains('add-privilege')}">class="active"</c:if> href="/add-privilege">Add</a>
+                    </li>
+                    <li><a
+                            <c:if test="${URI.contains('privilege-list')}">class="active"</c:if> href="/privilege-list">Privileges</a>
+                    </li>
                 </ul>
             </li>
             <li class="navigation-divider">Extras</li>
