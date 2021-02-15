@@ -31,21 +31,23 @@
                 <tr>
                     <th scope="col">Role Id</th>
                     <th scope="col">Role Name</th>
-                    <th scope="col">Add Privilege</th>
                     <th scope="col">Edit Role</th>
+                    <th scope="col">Manage Privileges</th>
                 </tr>
                 </thead>
                 <tbody>
 
-                <c:forEach items = "${listOfRoles}" var = "role">
+                <c:forEach items="${listOfRoles}" var="role">
                     <tr>
                         <td>${role.id}</td>
                         <td>${role.name}</td>
-                        <td><a href="roles-privileges/${role.id}" class="btn btn-secondary btn-sm text-white">Add Privilege</a>
+                        <td>
+                            <a href="edit-role/${role.id}" class="btn btn-secondary btn-sm text-white">Edit</a>
                         </td>
-                        <td><a href="edit-role/${role.id}" class="btn btn-secondary btn-sm text-white">Edit</a>
+                        <td>
+                            <a href="roles-privileges/${role.id}" class="btn btn-secondary btn-sm text-white">Manage
+                                Privileges</a>
                         </td>
-
                     </tr>
                 </c:forEach>
 

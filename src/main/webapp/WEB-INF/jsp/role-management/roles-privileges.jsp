@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!doctype html>
 <html lang="en">
@@ -23,8 +24,7 @@
     <div class="main-content">
         <div class="row mb-3">
             <div class="col-md-8"><h3 class="h3">Select ${role.name}'s Privileges</h3></div>
-            <div class="col-md-4"><a class="btn btn-primary float-right text-white" href="roles-privileges/${role.id}">Add
-                Privileges</a></div>
+            <div class="col-md-4"></div>
         </div>
         <div class="table-responsive">
             <table class="table">
@@ -32,7 +32,7 @@
                 <tr>
                     <th scope="col">Privilege Id</th>
                     <th scope="col">Privilege URL</th>
-                    <th scope="col">Selection</th>
+                    <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -41,12 +41,19 @@
                     <tr>
                         <td>${privilege.id}</td>
                         <td>${privilege.url}</td>
-
                         <td>
-                            <input class="form-check-input" type="checkbox" name="selectedRoles"
-                                   value="${privilege.url}">
+                            <c:if test="${!rolesPrivileges.contains(privilege)}">
+                                <form:form action="/roles-privileges/add/${role.id}/${privilege.id}" method="post">
+                                    <button class="btn btn-sm btn-primary" type="submit">ADD</button>
+                                </form:form>
+                            </c:if>
+
+                            <c:if test="${rolesPrivileges.contains(privilege)}">
+                                <form:form action="/roles-privileges/remove/${role.id}/${privilege.id}" method="post">
+                                    <button class="btn btn-sm btn-danger" type="submit">REMOVE</button>
+                                </form:form>
+                            </c:if>
                         </td>
-                            <%--todo implement edit and delete user action --%>
                     </tr>
                 </c:forEach>
 

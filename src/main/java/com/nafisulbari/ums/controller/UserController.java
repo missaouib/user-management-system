@@ -292,16 +292,49 @@ public class UserController {
     }
 
 
-
     @GetMapping("roles-privileges/{id}")
     public ModelAndView getRolesToPrivilegesView(@PathVariable("id") int id, Model model) {
         Optional<Role> optionalRole = roleRepository.findById(id);
         Role role = new Role(optionalRole);
+
+        List<Privilege> rolesPrivileges = new ArrayList<>();
+        role.getRoleToPrivileges().forEach(rtp -> {
+            rolesPrivileges.add(rtp.getPrivilege());
+        });
+
         model.addAttribute("role", role);
+        model.addAttribute("rolesPrivileges", rolesPrivileges);
         model.addAttribute("listOfPrivileges", privilegeRepository.findAll());
 
         return new ModelAndView("role-management/roles-privileges");
     }
+
+    @PostMapping("roles-privileges/add/{roleId}/{privilegeId}")
+    public ModelAndView addPrivilegeToRole(@PathVariable("roleId") int roleId,
+                                           @PathVariable("privilegeId") int privilegeId) {
+        Optional<Role> optionalRole = roleRepository.findById(roleId);
+        Role role = new Role(optionalRole);
+        Optional<Privilege> optionalPrivilege = privilegeRepository.findById(privilegeId);
+        Privilege privilege = new Privilege(optionalPrivilege);
+
+        RoleToPrivilege roleToPrivilege = new RoleToPrivilege();
+        roleToPrivilege.setRole(role);
+        roleToPrivilege.setPrivilege(privilege);
+        roleToPrivilegeRepository.save(roleToPrivilege);
+
+        return new ModelAndView("redirect:/roles-privileges/" + roleId);
+    }
+
+
+    @PostMapping("roles-privileges/remove/{roleId}/{privilegeId}")
+    public ModelAndView removePrivilegeFromRole(@PathVariable("roleId") int roleId,
+                                                @PathVariable("privilegeId") int privilegeId) {
+
+          roleToPrivilegeRepository.deleteDistinctByRoleIdAndPrivilegeId(roleId, privilegeId);
+
+        return new ModelAndView("redirect:/roles-privileges/" + roleId);
+    }
+
 
     /**
      * List of Roles are fetched from the repository and are checked with selectedRoles.
