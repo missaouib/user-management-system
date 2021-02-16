@@ -1,13 +1,7 @@
 package com.nafisulbari.ums.controller;
 
-import com.nafisulbari.ums.persistence.dao.PrivilegeRepository;
-import com.nafisulbari.ums.persistence.dao.RoleToPrivilegeRepository;
-import com.nafisulbari.ums.persistence.model.Privilege;
-import com.nafisulbari.ums.persistence.model.Role;
-import com.nafisulbari.ums.persistence.model.RoleToPrivilege;
-import com.nafisulbari.ums.persistence.model.User;
-import com.nafisulbari.ums.persistence.dao.RoleRepository;
-import com.nafisulbari.ums.persistence.dao.UserRepository;
+import com.nafisulbari.ums.persistence.dao.*;
+import com.nafisulbari.ums.persistence.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +25,9 @@ public class UserController {
 
     @Autowired
     PrivilegeRepository privilegeRepository;
+
+    @Autowired
+    UserToRoleRepository userToRoleRepository;
 
     @Autowired
     RoleToPrivilegeRepository roleToPrivilegeRepository;
@@ -116,6 +113,8 @@ public class UserController {
     @PostMapping("delete-user/{id}")
     public ModelAndView deleteUser(@PathVariable("id") int id) {
 
+
+        userToRoleRepository.deleteDistinctByUserId(id);
         userRepository.deleteById(id);
 
         return new ModelAndView("redirect:/user-list");
@@ -192,7 +191,6 @@ public class UserController {
         try {
             roleRepository.deleteById(id);
         } catch (Exception e) {
-            e.printStackTrace();
             Optional<Role> optionalRole = roleRepository.findById(id);
             Role role = new Role(optionalRole);
             model.addAttribute("role", role);
@@ -265,7 +263,6 @@ public class UserController {
     @PostMapping("delete-privilege/{id}")
     public ModelAndView deletePrivilege(@PathVariable("id") int id, Model model) {
 
-
         //todo if exception found(privileges been assigned) therefore don't allow delete
         try {
             privilegeRepository.deleteById(id);
@@ -292,9 +289,9 @@ public class UserController {
     }
 
 
-    @GetMapping("roles-privileges/{id}")
-    public ModelAndView getRolesToPrivilegesView(@PathVariable("id") int id, Model model) {
-        Optional<Role> optionalRole = roleRepository.findById(id);
+    @GetMapping("roles-privileges/{roleId}")
+    public ModelAndView getRolesToPrivilegesView(@PathVariable("roleId") int roleId, Model model) {
+        Optional<Role> optionalRole = roleRepository.findById(roleId);
         Role role = new Role(optionalRole);
 
         List<Privilege> rolesPrivileges = new ArrayList<>();
@@ -330,9 +327,54 @@ public class UserController {
     public ModelAndView removePrivilegeFromRole(@PathVariable("roleId") int roleId,
                                                 @PathVariable("privilegeId") int privilegeId) {
 
-          roleToPrivilegeRepository.deleteDistinctByRoleIdAndPrivilegeId(roleId, privilegeId);
+        roleToPrivilegeRepository.deleteDistinctByRoleIdAndPrivilegeId(roleId, privilegeId);
 
         return new ModelAndView("redirect:/roles-privileges/" + roleId);
+    }
+
+
+    @GetMapping("users-roles/{userId}")
+    public ModelAndView getUsersToRolesView(@PathVariable("userId") int userId, Model model) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        User user = new User(optionalUser);
+
+        List<Role> usersRoles = new ArrayList<>();
+        user.getUserToRoles().forEach(utr -> {
+            usersRoles.add(utr.getRole());
+        });
+
+        model.addAttribute("user", user);
+        model.addAttribute("usersRoles", usersRoles);
+        model.addAttribute("listOfRoles", roleRepository.findAll());
+
+        return new ModelAndView("user-management/users-roles");
+    }
+
+
+    @PostMapping("users-roles/add/{userId}/{roleId}")
+    public ModelAndView addRoleToUser(@PathVariable("userId") int userId,
+                                      @PathVariable("roleId") int roleId) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        User user = new User(optionalUser);
+        Optional<Role> optionalRole = roleRepository.findById(roleId);
+        Role role = new Role(optionalRole);
+
+        UserToRole userToRole = new UserToRole();
+        userToRole.setUser(user);
+        userToRole.setRole(role);
+        userToRoleRepository.save(userToRole);
+
+        return new ModelAndView("redirect:/users-roles/" + userId);
+    }
+
+
+    @PostMapping("users-roles/remove/{userId}/{roleId}")
+    public ModelAndView removeRoleFromUser(@PathVariable("userId") int userId,
+                                           @PathVariable("roleId") int roleId) {
+
+        userToRoleRepository.deleteDistinctByUserIdAndRoleId(userId, roleId);
+
+        return new ModelAndView("redirect:/users-roles/" + userId);
     }
 
 

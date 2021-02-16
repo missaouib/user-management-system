@@ -1,7 +1,4 @@
 package com.nafisulbari.ums.persistence.dao;
-
-import com.nafisulbari.ums.persistence.model.Privilege;
-import com.nafisulbari.ums.persistence.model.Role;
 import com.nafisulbari.ums.persistence.model.RoleToPrivilege;
 import org.springframework.data.repository.CrudRepository;
 

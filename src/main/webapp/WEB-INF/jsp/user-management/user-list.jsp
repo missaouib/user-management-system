@@ -23,7 +23,7 @@
     <div class="main-content">
         <div class="row mb-3">
             <div class="col-md-8"><h3 class="h3">List of users</h3></div>
-            <div class="col-md-4"><a class="btn btn-primary float-right text-white" href="add-user-form">Add User</a></div>
+            <div class="col-md-4"><a class="btn btn-primary float-right text-white" href="add-user">Add User</a></div>
         </div>
         <div class="table-responsive">
             <table class="table">
@@ -36,7 +36,8 @@
                     <th scope="col">Department</th>
                     <th scope="col">Status</th>
                     <th scope="col">Roles</th>
-                    <th scope="col">Action</th>
+                    <th scope="col">Manage Roles</th>
+                    <th scope="col">Edit Info</th>
 
                 </tr>
                 </thead>
@@ -51,12 +52,15 @@
                         <td>${user.department}</td>
                         <td>${user.status}</td>
                         <td>
-<%--                            <c:forEach items = "${user.userToRoles}" var = "role">--%>
-<%--                                ${role.role.roleName}--%>
-<%--                            </c:forEach>--%>
+                            <c:forEach items = "${user.userToRoles}" var = "userToRole">
+                                ${userToRole.role.name}
+                            </c:forEach>
                         </td>
+
+                        <td><a href="users-roles/${user.id}" class="btn btn-secondary btn-sm text-white">Manage</a></td>
+
                         <td><a href="edit-user/${user.id}" class="btn btn-secondary btn-sm text-white">Edit</a></td>
-                            <%--todo implement edit and delete user action --%>
+
                     </tr>
                 </c:forEach>
 
