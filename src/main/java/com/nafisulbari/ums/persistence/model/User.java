@@ -61,8 +61,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<UserToRole> userToRoles;
 
-    @NotEmpty
-    private String status;
+    @NotNull(message = "Value can be either true or false")
+    private boolean active;
 
 
     public User() {
@@ -83,7 +83,7 @@ public class User {
             this.extension = e.getExtension();
             this.joiningDate = e.getJoiningDate();
             this.mobile = e.getMobile();
-            this.status = e.getStatus();
+            this.active = e.isActive();
             this.userToRoles = e.getUserToRoles();
 
         });

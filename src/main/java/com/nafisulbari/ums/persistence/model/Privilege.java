@@ -18,7 +18,6 @@ public class Privilege {
 
 
     @NotBlank
-    @Column(name = "PRIVILEGE_NAME")
     private String url;
 
     public Privilege(){}

@@ -45,12 +45,12 @@
 
                 <c:forEach items = "${listOfUsers}" var = "user">
                     <tr>
-                        <td>${user.userId}</td>
+                        <td>${user.id}</td>
                         <td>${user.firstName}</td>
                         <td>${user.lastName}</td>
                         <td>${user.designation}</td>
                         <td>${user.department}</td>
-                        <td>${user.status}</td>
+                        <td>${user.active}</td>
                         <td>
                             <c:forEach items = "${user.userToRoles}" var = "userToRole">
                                 ${userToRole.role.name}

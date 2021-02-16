@@ -102,9 +102,9 @@
                     <form:errors cssClass="text-danger" path="joiningDate"/>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <form:label path="status">Status</form:label>
-                    <form:input path="status" class="form-control"/>
-                    <form:errors cssClass="text-danger" path="status"/>
+                    <form:label path="active">Active</form:label>
+                    <form:checkbox path="active" class="form-control"/>
+                    <form:errors cssClass="text-danger" path="active"/>
                 </div>
             </div>
             <div class="form-row">

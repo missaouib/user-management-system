@@ -29,7 +29,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) {
         User user = userRepository.findByUserId(Integer.parseInt(username));
+
+
+
         if (user == null) throw new UsernameNotFoundException(username);
+
+        System.out.println("ServiceImpl"+" : "+user.getPassword());
 
         Set<GrantedAuthority> authorities = new HashSet<>();
 

@@ -20,7 +20,7 @@ public class CustomErrorController implements ErrorController {
     }
 
 
-    @RequestMapping("/error")
+    @RequestMapping("error")
     public String handleError(HttpServletRequest request, Model model) {
         Object errorCodeObject = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
         Object errorMessage = request.getAttribute(RequestDispatcher.ERROR_MESSAGE);
